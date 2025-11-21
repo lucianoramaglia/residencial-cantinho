@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Residencial Cantinho da Costeira - Zimbros, Bombinhas</title>
+    <meta name="description"
+        content="Residencial em Zimbros (Bombinhas), a 100m da praia. Apartamentos equipados para até 5 pessoas, com piscina comum.">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+    <!-- Navbar -->
+    <header class="sticky top-0 z-20 bg-white/90 backdrop-blur shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="#inicio" class="font-semibold text-lg tracking-wide">
+                Residencial <span class="text-teal-600">Cantinho da Costeira</span>
+            </a>
+            <nav class="hidden md:flex gap-6 text-sm">
+                <a href="#apartments" class="hover:text-teal-600" data-i18n="nav.apartments"></a>
+                <a href="#services" class="hover:text-teal-600" data-i18n="nav.services"></a>
+                <a href="#gallery" class="hover:text-teal-600" data-i18n="nav.photos"></a>
+                <a href="#location" class="hover:text-teal-600" data-i18n="nav.location"></a>
+                <a href="#contact" class="hover:text-teal-600 font-medium" data-i18n="nav.contact"></a>
+            </nav>
+            <!-- Language selector -->
+            <div class="flex items-center gap-2 text-xs">
+                <button id="btn-pt"
+                    class="px-2 py-1 rounded-full border border-slate-300 bg-slate-100 font-medium">PT</button>
+                <button id="btn-es"
+                    class="px-2 py-1 rounded-full border border-slate-200 hover:bg-slate-100">ES</button>
+            </div>
+        </div>
+    </header>
+
+    <main id="inicio">
+        <!-- Hero -->
+        <section class="relative">
+            <div class="max-w-6xl mx-auto px-4 py-12 md:py-20 grid md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.25em] text-teal-600 mb-3" data-i18n="hero.tagline"></p>
+                    <h1 class="text-3xl md:text-5xl font-semibold leading-tight mb-4" data-i18n="hero.title"></h1>
+                    <p class="text-slate-600 mb-6 text-sm" data-i18n="hero.subtitle"></p>
+                    <div class="flex flex-wrap gap-3">
+                        <!-- WhatsApp link -->
+                        <a id="whatsapp-main"
+                            href="https://wa.me/5547974003344?text=Ol%C3%A1,%20gostaria%20de%20saber%20sobre%20disponibilidade%20no%20Residencial%20Cantinho%20da%20Costeira"
+                            class="inline-flex items-center justify-center px-5 py-3 rounded-full bg-teal-600 text-white text-sm font-medium shadow hover:bg-teal-700 transition-colors"
+                            data-i18n="hero.whatsappBtn">
+                        </a>
+                        <a href="#apartments"
+                            class="inline-flex items-center justify-center px-5 py-3 rounded-full border border-slate-300 text-sm font-medium hover:bg-slate-100 transition-colors"
+                            data-i18n="hero.seeApartments">
+                        </a>
+                    </div>
+                </div>
+                <div class="relative h-64 md:h-80 rounded-3xl overflow-hidden shadow-lg bg-slate-200">
+                    <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                        alt="Residencial próximo à praia" class="w-full h-full object-cover" />
+                    <div class="absolute bottom-3 left-3 bg-white/80 backdrop-blur px-3 py-2 rounded-2xl text-xs shadow"
+                        data-i18n="hero.badge">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Apartments -->
+        <section id="apartments" class="py-12 md:py-16 bg-white">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex items-center justify-between mb-8 gap-4">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-semibold mb-1" data-i18n="apartments.title"></h2>
+                        <p class="text-slate-600 text-sm" data-i18n="apartments.subtitle"></p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Apt 1 -->
+                    <article
+                        class="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden shadow-sm flex flex-col">
+                        <div class="h-40 bg-slate-200">
+                            <img src="https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                alt="Apartamento até 5 pessoas" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-4 flex-1 flex flex-col">
+                            <h3 class="font-semibold mb-1 text-sm" data-i18n="apartments.card1.title"></h3>
+                            <p class="text-xs text-slate-600 mb-2" data-i18n="apartments.card1.desc"></p>
+                            <p class="text-xs text-slate-500 mb-3" data-i18n="apartments.card1.capacity"></p>
+                            <div class="mt-auto flex items-center justify-between text-xs">
+                                <span class="font-medium text-teal-600" data-i18n="apartments.card1.price"></span>
+                                <a href="#contact" class="underline text-slate-700 hover:text-teal-600"
+                                    data-i18n="apartments.card.contact"></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Apt 2 -->
+                    <article
+                        class="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden shadow-sm flex flex-col">
+                        <div class="h-40 bg-slate-200">
+                            <img src="https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                alt="Apartamento com dois quartos" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-4 flex-1 flex flex-col">
+                            <h3 class="font-semibold mb-1 text-sm" data-i18n="apartments.card2.title"></h3>
+                            <p class="text-xs text-slate-600 mb-2" data-i18n="apartments.card2.desc"></p>
+                            <p class="text-xs text-slate-500 mb-3" data-i18n="apartments.card2.capacity"></p>
+                            <div class="mt-auto flex items-center justify-between text-xs">
+                                <span class="font-medium text-teal-600" data-i18n="apartments.card2.price"></span>
+                                <a href="#contact" class="underline text-slate-700 hover:text-teal-600"
+                                    data-i18n="apartments.card.contact"></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Apt 3 -->
+                    <article
+                        class="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden shadow-sm flex flex-col">
+                        <div class="h-40 bg-slate-200">
+                            <img src="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                alt="Apartamento tipo loft" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-4 flex-1 flex flex-col">
+                            <h3 class="font-semibold mb-1 text-sm" data-i18n="apartments.card3.title"></h3>
+                            <p class="text-xs text-slate-600 mb-2" data-i18n="apartments.card3.desc"></p>
+                            <p class="text-xs text-slate-500 mb-3" data-i18n="apartments.card3.capacity"></p>
+                            <div class="mt-auto flex items-center justify-between text-xs">
+                                <span class="font-medium text-teal-600" data-i18n="apartments.card3.price"></span>
+                                <a href="#contact" class="underline text-slate-700 hover:text-teal-600"
+                                    data-i18n="apartments.card.contact"></a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="py-12 md:py-16">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-2xl md:3xl font-semibold mb-6" data-i18n="services.title"></h2>
+                <div class="grid md:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                        <p class="font-medium mb-1" data-i18n="services.card1.title"></p>
+                        <p class="text-slate-600 text-xs" data-i18n="services.card1.desc"></p>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                        <p class="font-medium mb-1" data-i18n="services.card2.title"></p>
+                        <p class="text-slate-600 text-xs" data-i18n="services.card2.desc"></p>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                        <p class="font-medium mb-1" data-i18n="services.card3.title"></p>
+                        <p class="text-slate-600 text-xs" data-i18n="services.card3.desc"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section id="gallery" class="py-12 md:py-16 bg-white">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6" data-i18n="gallery.title"></h2>
+                <p class="text-xs text-slate-600 mb-4" data-i18n="gallery.subtitle"></p>
+                <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    <!-- Replace these with real photos -->
+                    <img class="rounded-2xl h-40 w-full object-cover"
+                        src="https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                        alt="Foto 1">
+                    <img class="rounded-2xl h-40 w-full object-cover"
+                        src="https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                        alt="Foto 2">
+                    <img class="rounded-2xl h-40 w-full object-cover"
+                        src="https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                        alt="Foto 3">
+                    <img class="rounded-2xl h-40 w-full object-cover"
+                        src="https://images.pexels.com/photos/279719/pexels-photo-279719.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                        alt="Foto 4">
+                    <img class="rounded-2xl h-40 w-full object-cover"
+                        src="https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                        alt="Foto 5">
+                    <img class="rounded-2xl h-40 w-full object-cover"
+                        src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                        alt="Foto 6">
+                </div>
+            </div>
+        </section>
+
+        <!-- Location -->
+        <section id="location" class="py-12 md:py-16">
+            <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-3" data-i18n="location.title"></h2>
+                    <p class="text-slate-600 text-sm mb-3" data-i18n="location.desc1"></p>
+                    <p class="text-slate-600 text-sm mb-3" data-i18n="location.desc2"></p>
+                    <p class="text-slate-600 text-xs">
+                        <a href="https://maps.app.goo.gl/HjdH4ZtXETNSEvXP9" target="_blank"
+                            class="text-teal-700 underline">
+                            Ver no Google Maps
+                        </a>
+                    </p>
+                </div>
+                <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-sm h-64 md:h-72 bg-slate-100">
+                    <!-- TIP: quando quiser, vá no Google Maps → Compartilhar → Incorporar um mapa, e substitua o src abaixo -->
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.24773599068!2d-48.54450972361581!3d-27.179949476488947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94d8a5003f4e4b77%3A0x5b51614de24cdcc!2sResidencial%20Cantinho%20da%20costeira!5e0!3m2!1sen!2sar!4v1763763547266!5m2!1sen!2sar"
+                        class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="py-12 md:py-16 bg-white">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-3" data-i18n="contact.title"></h2>
+                <p class="text-slate-600 text-sm mb-6" data-i18n="contact.subtitle"></p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.25em] text-slate-500 mb-1"
+                                data-i18n="contact.whatsappLabel"></p>
+                            <a id="whatsapp-contact"
+                                href="https://wa.me/5547974003344?text=Ol%C3%A1,%20gostaria%20de%20saber%20sobre%20disponibilidade%20no%20Residencial%20Cantinho%20da%20Costeira"
+                                class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-teal-600 text-white text-xs font-medium shadow hover:bg-teal-700 transition-colors"
+                                data-i18n="contact.whatsappBtn">
+                            </a>
+                        </div>
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.25em] text-slate-500 mb-1"
+                                data-i18n="contact.emailLabel"></p>
+                            <!-- EMAIL: reemplazá esto cuando tengas el real -->
+                            <a href="mailto:contato@cantinhodacosteira.com" class="text-sm text-teal-700 underline">
+                                contato@cantinhodacosteira.com
+                            </a>
+                        </div>
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.25em] text-slate-500 mb-1"
+                                data-i18n="contact.instagramLabel"></p>
+                            <a href="https://www.instagram.com/cantinhodacosteira" target="_blank"
+                                class="text-sm text-teal-700 underline">
+                                @cantinhodacosteira
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Simple form (no backend yet) -->
+                    <form class="bg-slate-50 border border-slate-200 rounded-3xl p-4 space-y-3 text-xs">
+                        <div class="grid md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block mb-1 font-medium" data-i18n="form.nameLabel"></label>
+                                <input type="text" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs"
+                                    placeholder="" data-i18n-placeholder="form.namePlaceholder" />
+                            </div>
+                            <div>
+                                <label class="block mb-1 font-medium" data-i18n="form.emailLabel"></label>
+                                <input type="email" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs"
+                                    placeholder="" data-i18n-placeholder="form.emailPlaceholder" />
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block mb-1 font-medium" data-i18n="form.checkInLabel"></label>
+                                <input type="date"
+                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
+                            </div>
+                            <div>
+                                <label class="block mb-1 font-medium" data-i18n="form.checkOutLabel"></label>
+                                <input type="date"
+                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block mb-1 font-medium" data-i18n="form.messageLabel"></label>
+                            <textarea class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" rows="3"
+                                placeholder="" data-i18n-placeholder="form.messagePlaceholder"></textarea>
+                        </div>
+                        <p class="text-[11px] text-slate-500" data-i18n="form.note"></p>
+                        <button type="button"
+                            class="w-full mt-1 inline-flex items-center justify-center px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors"
+                            data-i18n="form.submitDemo">
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 py-4 text-center text-[11px] text-slate-500">
+        © <span id="year"></span> Residencial Cantinho da Costeira - Zimbros, Bombinhas.
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const translations = {
+            pt: {
+                "nav.apartments": "Apartamentos",
+                "nav.services": "Serviços",
+                "nav.photos": "Fotos",
+                "nav.location": "Localização",
+                "nav.contact": "Contato",
+
+                "hero.tagline": "Residencial em Zimbros (Bombinhas)",
+                "hero.title": "Seu cantinho a 100m da praia de Zimbros",
+                "hero.subtitle": "Apartamentos equipados para até 5 pessoas, com piscina comum, em um ambiente familiar e tranquilo em Bombinhas.",
+                "hero.whatsappBtn": "Falar pelo WhatsApp",
+                "hero.seeApartments": "Ver apartamentos",
+                "hero.badge": "A 100m da praia de Zimbros",
+
+                "apartments.title": "Apartamentos equipados",
+                "apartments.subtitle": "Opções confortáveis para famílias e grupos de até 5 pessoas.",
+                "apartments.card1.title": "Apartamento térreo – até 5 pessoas",
+                "apartments.card1.desc": "Sala e cozinha integradas, 1 dormitório, banheiro, ar-condicionado e área externa.",
+                "apartments.card1.capacity": "Capacidade: até 5 hóspedes.",
+                "apartments.card1.price": "Consulte valores por temporada",
+                "apartments.card2.title": "Apartamento com 2 dormitórios",
+                "apartments.card2.desc": "Dois quartos, banheiro, cozinha completa e varanda, ideal para famílias.",
+                "apartments.card2.capacity": "Capacidade: até 5 hóspedes.",
+                "apartments.card2.price": "Consulte valores por temporada",
+                "apartments.card3.title": "Apartamento tipo loft",
+                "apartments.card3.desc": "Ambiente amplo, bem ventilado, com cozinha equipada e área de convivência.",
+                "apartments.card3.capacity": "Capacidade: até 5 hóspedes.",
+                "apartments.card3.price": "Consulte valores por temporada",
+                "apartments.card.contact": "Consultar",
+
+                "services.title": "Serviços e comodidades",
+                "services.card1.title": "Conforto",
+                "services.card1.desc": "Apartamentos mobiliados, ar-condicionado, roupa de cama e ambiente familiar.",
+                "services.card2.title": "Piscina comum",
+                "services.card2.desc": "Piscina compartilhada para relaxar depois da praia.",
+                "services.card3.title": "Localização",
+                "services.card3.desc": "A apenas 100m da praia de Zimbros, próxima a mercados e restaurantes.",
+
+                "gallery.title": "Fotos",
+                "gallery.subtitle": "Em breve, adicionaremos fotos reais de cada apartamento e da piscina.",
+
+                "location.title": "Localização em Zimbros",
+                "location.desc1": "O Residencial Cantinho da Costeira fica em Zimbros (Bombinhas), a aproximadamente 100m da praia, em uma região tranquila e segura.",
+                "location.desc2": "Fácil acesso de carro e boa estrutura de serviços por perto. Entre em contato para orientações sobre como chegar desde o aeroporto ou rodoviária.",
+
+                "contact.title": "Contato",
+                "contact.subtitle": "Fale conosco para verificar disponibilidade e valores nas datas da sua viagem.",
+                "contact.whatsappLabel": "WhatsApp",
+                "contact.whatsappBtn": "Enviar mensagem",
+                "contact.emailLabel": "E-mail",
+                "contact.instagramLabel": "Instagram",
+
+                "form.nameLabel": "Nome",
+                "form.namePlaceholder": "Seu nome",
+                "form.emailLabel": "E-mail",
+                "form.emailPlaceholder": "seu@email.com",
+                "form.checkInLabel": "Data de chegada",
+                "form.checkOutLabel": "Data de saída",
+                "form.messageLabel": "Mensagem",
+                "form.messagePlaceholder": "Quantidade de pessoas, dúvidas, horários aproximados, etc.",
+                "form.note": "* Formulário demonstrativo. Podemos conectá-lo a um serviço de e-mail ou sistema de reservas depois.",
+                "form.submitDemo": "Enviar (demo)"
+            },
+            es: {
+                "nav.apartments": "Departamentos",
+                "nav.services": "Servicios",
+                "nav.photos": "Fotos",
+                "nav.location": "Ubicación",
+                "nav.contact": "Contacto",
+
+                "hero.tagline": "Residencial en Zimbros (Bombinhas)",
+                "hero.title": "Tu lugar a 100m de la playa de Zimbros",
+                "hero.subtitle": "Departamentos equipados para hasta 5 personas, con piscina común, en un ambiente familiar y tranquilo en Bombinhas.",
+                "hero.whatsappBtn": "Escribir por WhatsApp",
+                "hero.seeApartments": "Ver departamentos",
+                "hero.badge": "A 100m de la playa de Zimbros",
+
+                "apartments.title": "Departamentos equipados",
+                "apartments.subtitle": "Opciones cómodas para familias y grupos de hasta 5 personas.",
+                "apartments.card1.title": "Departamento planta baja – hasta 5 personas",
+                "apartments.card1.desc": "Living y cocina integrados, 1 dormitorio, baño, aire acondicionado y área exterior.",
+                "apartments.card1.capacity": "Capacidad: hasta 5 huéspedes.",
+                "apartments.card1.price": "Consultar tarifas por temporada",
+                "apartments.card2.title": "Departamento con 2 dormitorios",
+                "apartments.card2.desc": "Dos habitaciones, baño, cocina completa y balcón, ideal para familias.",
+                "apartments.card2.capacity": "Capacidad: hasta 5 huéspedes.",
+                "apartments.card2.price": "Consultar tarifas por temporada",
+                "apartments.card3.title": "Departamento tipo loft",
+                "apartments.card3.desc": "Ambiente amplio y luminoso, con cocina equipada y área de estar.",
+                "apartments.card3.capacity": "Capacidad: hasta 5 huéspedes.",
+                "apartments.card3.price": "Consultar tarifas por temporada",
+                "apartments.card.contact": "Consultar",
+
+                "services.title": "Servicios y comodidades",
+                "services.card1.title": "Confort",
+                "services.card1.desc": "Departamentos amoblados, aire acondicionado, ropa de cama y ambiente familiar.",
+                "services.card2.title": "Piscina común",
+                "services.card2.desc": "Piscina compartida para relajarse después de la playa.",
+                "services.card3.title": "Ubicación",
+                "services.card3.desc": "A solo 100m de la playa de Zimbros, cerca de mercados y restaurantes.",
+
+                "gallery.title": "Fotos",
+                "gallery.subtitle": "Pronto agregaremos fotos reales de cada departamento y de la piscina.",
+
+                "location.title": "Ubicación en Zimbros",
+                "location.desc1": "El Residencial Cantinho da Costeira se encuentra en Zimbros (Bombinhas), a aproximadamente 100m de la playa, en una zona tranquila y segura.",
+                "location.desc2": "Fácil acceso en auto y con buena infraestructura de servicios cerca. Escribinos para más detalles sobre cómo llegar desde el aeropuerto o la terminal.",
+
+                "contact.title": "Contacto",
+                "contact.subtitle": "Escribinos para consultar disponibilidad y tarifas para tus fechas.",
+                "contact.whatsappLabel": "WhatsApp",
+                "contact.whatsappBtn": "Enviar mensaje",
+                "contact.emailLabel": "Email",
+                "contact.instagramLabel": "Instagram",
+
+                "form.nameLabel": "Nombre",
+                "form.namePlaceholder": "Tu nombre",
+                "form.emailLabel": "Email",
+                "form.emailPlaceholder": "tu@email.com",
+                "form.checkInLabel": "Fecha de llegada",
+                "form.checkOutLabel": "Fecha de salida",
+                "form.messageLabel": "Mensaje",
+                "form.messagePlaceholder": "Cantidad de personas, dudas, horarios aproximados, etc.",
+                "form.note": "* Formulario de demostración. Después podemos conectarlo a un servicio de email o sistema de reservas.",
+                "form.submitDemo": "Enviar (demo)"
+            }
+        };
+
+        function setLanguage(lang) {
+            const dict = translations[lang];
+            if (!dict) return;
+
+            document.documentElement.lang = lang;
+
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const key = el.getAttribute("data-i18n");
+                if (dict[key]) el.textContent = dict[key];
+            });
+
+            document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+                const key = el.getAttribute("data-i18n-placeholder");
+                if (dict[key]) el.placeholder = dict[key];
+            });
+
+            const btnPt = document.getElementById("btn-pt");
+            const btnEs = document.getElementById("btn-es");
+            if (lang === "pt") {
+                btnPt.classList.add("bg-slate-100", "border-slate-300", "font-medium");
+                btnEs.classList.remove("bg-slate-100", "border-slate-300", "font-medium");
+            } else {
+                btnEs.classList.add("bg-slate-100", "border-slate-300", "font-medium");
+                btnPt.classList.remove("bg-slate-100", "border-slate-300", "font-medium");
+            }
+        }
+
+        document.getElementById("btn-pt").addEventListener("click", () => setLanguage("pt"));
+        document.getElementById("btn-es").addEventListener("click", () => setLanguage("es"));
+
+        // Idioma por defecto
+        setLanguage("pt");
+    </script>
+</body>
+
+</html>
