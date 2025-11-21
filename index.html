@@ -27,9 +27,17 @@
             <!-- Language selector -->
             <div class="flex items-center gap-2 text-xs">
                 <button id="btn-pt"
-                    class="px-2 py-1 rounded-full border border-slate-300 bg-slate-100 font-medium">PT</button>
+                    class="flex items-center gap-1 px-2 py-1 rounded-full border border-slate-300 bg-slate-100 font-medium">
+                    <span aria-hidden="true">🇧🇷</span>
+                    <span class="hidden sm:inline">PT</span>
+                    <span class="sr-only">Português</span>
+                </button>
                 <button id="btn-es"
-                    class="px-2 py-1 rounded-full border border-slate-200 hover:bg-slate-100">ES</button>
+                    class="flex items-center gap-1 px-2 py-1 rounded-full border border-slate-200 hover:bg-slate-100">
+                    <span aria-hidden="true">🇪🇸</span>
+                    <span class="hidden sm:inline">ES</span>
+                    <span class="sr-only">Español</span>
+                </button>
             </div>
         </div>
     </header>
@@ -201,7 +209,6 @@
                     </p>
                 </div>
                 <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-sm h-64 md:h-72 bg-slate-100">
-                    <!-- TIP: quando quiser, vá no Google Maps → Compartilhar → Incorporar um mapa, e substitua o src abaixo -->
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.24773599068!2d-48.54450972361581!3d-27.179949476488947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94d8a5003f4e4b77%3A0x5b51614de24cdcc!2sResidencial%20Cantinho%20da%20costeira!5e0!3m2!1sen!2sar!4v1763763547266!5m2!1sen!2sar"
                         class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy"
@@ -230,9 +237,8 @@
                         <div>
                             <p class="text-xs uppercase tracking-[0.25em] text-slate-500 mb-1"
                                 data-i18n="contact.emailLabel"></p>
-                            <!-- EMAIL: reemplazá esto cuando tengas el real -->
-                            <a href="mailto:contato@cantinhodacosteira.com" class="text-sm text-teal-700 underline">
-                                contato@cantinhodacosteira.com
+                            <a href="mailto:cantinhodacosteira@gmail.com" class="text-sm text-teal-700 underline">
+                                cantinhodacosteira@gmail.com
                             </a>
                         </div>
                         <div>
@@ -294,6 +300,12 @@
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // WhatsApp links por idioma
+        const whatsappLinks = {
+            pt: "https://wa.me/5547974003344?text=Ol%C3%A1,%20gostaria%20de%20saber%20sobre%20disponibilidade%20no%20Residencial%20Cantinho%20da%20Costeira",
+            es: "https://wa.me/5547974003344?text=Hola%2C%20quiero%20consultar%20por%20disponibilidad%20en%20el%20Residencial%20Cantinho%20da%20Costeira"
+        };
 
         const translations = {
             pt: {
@@ -449,6 +461,12 @@
                 btnEs.classList.add("bg-slate-100", "border-slate-300", "font-medium");
                 btnPt.classList.remove("bg-slate-100", "border-slate-300", "font-medium");
             }
+
+            // Actualizar links de WhatsApp según idioma
+            const waMain = document.getElementById("whatsapp-main");
+            const waContact = document.getElementById("whatsapp-contact");
+            if (waMain && whatsappLinks[lang]) waMain.href = whatsappLinks[lang];
+            if (waContact && whatsappLinks[lang]) waContact.href = whatsappLinks[lang];
         }
 
         document.getElementById("btn-pt").addEventListener("click", () => setLanguage("pt"));
