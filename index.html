@@ -295,42 +295,51 @@
                     </div>
 
                     <!-- Columna derecha: formulario -->
-                    <form class="bg-slate-50 border border-slate-200 rounded-3xl p-4 space-y-3 text-xs">
+                    <form action="https://formspree.io/f/xyzvewpp" method="POST"
+                        class="bg-slate-50 border border-slate-200 rounded-3xl p-4 space-y-3 text-xs">
+                    
                         <div class="grid md:grid-cols-2 gap-3">
                             <div>
                                 <label class="block mb-1 font-medium" data-i18n="form.nameLabel"></label>
-                                <input type="text" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs"
+                                <input type="text" name="name" required class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs"
                                     placeholder="" data-i18n-placeholder="form.namePlaceholder" />
                             </div>
                             <div>
                                 <label class="block mb-1 font-medium" data-i18n="form.emailLabel"></label>
-                                <input type="email" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs"
-                                    placeholder="" data-i18n-placeholder="form.emailPlaceholder" />
+                                <input type="email" name="email" required
+                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" placeholder=""
+                                    data-i18n-placeholder="form.emailPlaceholder" />
                             </div>
                         </div>
+                    
                         <div class="grid md:grid-cols-2 gap-3">
                             <div>
                                 <label class="block mb-1 font-medium" data-i18n="form.checkInLabel"></label>
-                                <input type="date"
-                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
+                                <input type="date" name="check_in" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
                             </div>
                             <div>
                                 <label class="block mb-1 font-medium" data-i18n="form.checkOutLabel"></label>
-                                <input type="date"
-                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
+                                <input type="date" name="check_out" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
                             </div>
                         </div>
+                    
                         <div>
                             <label class="block mb-1 font-medium" data-i18n="form.messageLabel"></label>
-                            <textarea class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" rows="3"
+                            <textarea name="message" rows="3" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs"
                                 placeholder="" data-i18n-placeholder="form.messagePlaceholder"></textarea>
                         </div>
+                    
+                        <!-- idioma actual -->
+                        <input type="hidden" name="lang" id="form-lang" value="pt" />
+                    
                         <p class="text-[11px] text-slate-500" data-i18n="form.note"></p>
-                        <button type="button"
+                    
+                        <button type="submit"
                             class="w-full mt-1 inline-flex items-center justify-center px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors"
                             data-i18n="form.submitDemo">
                         </button>
                     </form>
+
                 </div>
             </div>
         </section>
@@ -513,6 +522,10 @@
             const waContact = document.getElementById("whatsapp-contact");
             if (waMain && whatsappLinks[lang]) waMain.href = whatsappLinks[lang];
             if (waContact && whatsappLinks[lang]) waContact.href = whatsappLinks[lang];
+            
+            const langInput = document.getElementById("form-lang");
+            if (langInput) langInput.value = lang;
+
         }
 
         document.getElementById("btn-pt").addEventListener("click", () => setLanguage("pt"));
