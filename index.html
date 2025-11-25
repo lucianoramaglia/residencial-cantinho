@@ -7,6 +7,11 @@
     <title>Residencial Cantinho da Costeira - Zimbros, Bombinhas</title>
     <meta name="description"
         content="Residencial em Zimbros (Bombinhas), a 100m da praia. Apartamentos equipados para até 5 pessoas, com piscina comum.">
+    <link rel="icon" type="image/x-icon" href="resources/img/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="resources/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="resources/img/favicon-64x64.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="resources/img/favicon-256x256.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -14,8 +19,11 @@
     <!-- Navbar -->
     <header class="sticky top-0 z-20 bg-white/90 backdrop-blur shadow-sm">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="#inicio" class="font-semibold text-lg tracking-wide">
-                Residencial <span class="text-teal-600">Cantinho da Costeira</span>
+            <a href="#inicio" class="flex items-center gap-2 font-semibold text-lg tracking-wide">
+                <img src="resources/img/logo-main-blue.png" alt="Residencial Cantinho da Costeira" class="h-9 w-auto">
+                <span class="hidden sm:inline">
+                    Residencial <span class="text-teal-600">Cantinho da Costeira</span>
+                </span>
             </a>
             <nav class="hidden md:flex gap-6 text-sm">
                 <a href="#apartments" class="hover:text-teal-600" data-i18n="nav.apartments"></a>
@@ -155,7 +163,7 @@
         <!-- Services -->
         <section id="services" class="py-12 md:py-16">
             <div class="max-w-6xl mx-auto px-4">
-                <h2 class="text-2xl md:text-3xl font-semibold mb-6" data-i18n="services.title"></h2>
+                <h2 class="text-2xl md:3xl font-semibold mb-6" data-i18n="services.title"></h2>
                 <div class="grid md:grid-cols-3 gap-4 text-sm">
                     <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                         <p class="font-medium mb-1" data-i18n="services.card1.title"></p>
@@ -218,7 +226,7 @@
                                 <path d="M12 22s7-6.29 7-12A7 7 0 1 0 5 10c0 5.71 7 12 7 12Z" />
                                 <circle cx="12" cy="10" r="3" />
                             </svg>
-                            <span data-i18n="location.mapsLink"></span>
+                            <span>Ver no Google Maps</span>
                         </a>
                     </p>
                 </div>
@@ -262,7 +270,8 @@
                         <!-- Email -->
                         <div>
                             <p class="text-xs uppercase tracking-[0.25em] text-slate-500 mb-1"
-                                data-i18n="contact.emailLabel"></p>
+                                data-i18n="contact.emailLabel">
+                            </p>
                             <a href="mailto:cantinhodacosteira@gmail.com"
                                 class="inline-flex items-center gap-2 text-sm text-teal-700 underline">
                                 <!-- Ícono Email -->
@@ -297,12 +306,12 @@
                     <!-- Columna derecha: formulario -->
                     <form action="https://formspree.io/f/xyzvewpp" method="POST"
                         class="bg-slate-50 border border-slate-200 rounded-3xl p-4 space-y-3 text-xs">
-                    
                         <div class="grid md:grid-cols-2 gap-3">
                             <div>
                                 <label class="block mb-1 font-medium" data-i18n="form.nameLabel"></label>
-                                <input type="text" name="name" required class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs"
-                                    placeholder="" data-i18n-placeholder="form.namePlaceholder" />
+                                <input type="text" name="name" required
+                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" placeholder=""
+                                    data-i18n-placeholder="form.namePlaceholder" />
                             </div>
                             <div>
                                 <label class="block mb-1 font-medium" data-i18n="form.emailLabel"></label>
@@ -311,35 +320,34 @@
                                     data-i18n-placeholder="form.emailPlaceholder" />
                             </div>
                         </div>
-                    
                         <div class="grid md:grid-cols-2 gap-3">
                             <div>
                                 <label class="block mb-1 font-medium" data-i18n="form.checkInLabel"></label>
-                                <input type="date" name="check_in" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
+                                <input type="date" name="check_in"
+                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
                             </div>
                             <div>
                                 <label class="block mb-1 font-medium" data-i18n="form.checkOutLabel"></label>
-                                <input type="date" name="check_out" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
+                                <input type="date" name="check_out"
+                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
                             </div>
                         </div>
-                    
                         <div>
                             <label class="block mb-1 font-medium" data-i18n="form.messageLabel"></label>
-                            <textarea name="message" rows="3" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs"
-                                placeholder="" data-i18n-placeholder="form.messagePlaceholder"></textarea>
+                            <textarea name="message" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs"
+                                rows="3" placeholder="" data-i18n-placeholder="form.messagePlaceholder"></textarea>
                         </div>
-                    
+
                         <!-- idioma actual -->
                         <input type="hidden" name="lang" id="form-lang" value="pt" />
-                    
+
                         <p class="text-[11px] text-slate-500" data-i18n="form.note"></p>
-                    
+
                         <button type="submit"
                             class="w-full mt-1 inline-flex items-center justify-center px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors"
                             data-i18n="form.submitDemo">
                         </button>
                     </form>
-
                 </div>
             </div>
         </section>
@@ -348,7 +356,10 @@
 
     <!-- Footer -->
     <footer class="border-t border-slate-200 py-4 text-center text-[11px] text-slate-500">
-        © <span id="year"></span> Residencial Cantinho da Costeira - Zimbros, Bombinhas.
+        <div class="flex flex-col items-center gap-2">
+            <img src="resources/img/favicon-64x64.png" alt="Residencial Cantinho da Costeira" class="h-8 w-auto">
+            <p>© <span id="year"></span> Residencial Cantinho da Costeira - Zimbros, Bombinhas.</p>
+        </div>
     </footer>
 
     <script>
@@ -405,7 +416,6 @@
                 "location.title": "Localização em Zimbros",
                 "location.desc1": "O Residencial Cantinho da Costeira fica em Zimbros (Bombinhas), a aproximadamente 100m da praia, em uma região tranquila e segura.",
                 "location.desc2": "Fácil acesso de carro e boa estrutura de serviços por perto. Entre em contato para orientações sobre como chegar desde o aeroporto ou rodoviária.",
-                "location.mapsLink": "Ver no Google Maps",
 
                 "contact.title": "Contato",
                 "contact.subtitle": "Fale conosco para verificar disponibilidade e valores nas datas da sua viagem.",
@@ -469,7 +479,6 @@
                 "location.title": "Ubicación en Zimbros",
                 "location.desc1": "El Residencial Cantinho da Costeira se encuentra en Zimbros (Bombinhas), a aproximadamente 100m de la playa, en una zona tranquila y segura.",
                 "location.desc2": "Fácil acceso en auto y con buena infraestructura de servicios cerca. Escribinos para más detalles sobre cómo llegar desde el aeropuerto o la terminal.",
-                "location.mapsLink": "Ver en Google Maps",
 
                 "contact.title": "Contacto",
                 "contact.subtitle": "Escribinos para consultar disponibilidad y tarifas para tus fechas.",
@@ -522,7 +531,8 @@
             const waContact = document.getElementById("whatsapp-contact");
             if (waMain && whatsappLinks[lang]) waMain.href = whatsappLinks[lang];
             if (waContact && whatsappLinks[lang]) waContact.href = whatsappLinks[lang];
-            
+
+            // Actualizar idioma en el hidden del formulario
             const langInput = document.getElementById("form-lang");
             if (langInput) langInput.value = lang;
 
