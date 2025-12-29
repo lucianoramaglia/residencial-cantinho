@@ -70,183 +70,329 @@
     }
     </script>
     <style>
+        :root {
+            --color-primary: #0d9488;
+            --color-primary-dark: #0f766e;
+            --color-primary-light: #14b8a6;
+            --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         html {
             scroll-behavior: smooth;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Animaciones de entrada */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Efectos hover mejorados */
+        .card-hover {
+            transition: var(--transition-base);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Lightbox mejorado */
         #lightbox {
             display: flex;
+            backdrop-filter: blur(8px);
         }
+
         #lightbox.hidden {
             display: none;
+        }
+
+        #lightbox-img {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Menú móvil mejorado */
+        #mobile-menu {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #mobile-menu-overlay {
+            transition: opacity 0.3s ease-out;
+        }
+
+        /* Botones mejorados */
+        .btn-primary {
+            transition: var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Gradientes sutiles */
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(13, 148, 136, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%);
+        }
+
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Mejoras de accesibilidad */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus visible mejorado */
+        *:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
         }
     </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-gradient-to-br from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
     <!-- Navbar -->
-    <header class="sticky top-0 z-20 bg-white/90 backdrop-blur shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="#inicio" class="flex items-center gap-2 font-semibold text-lg tracking-wide">
-                <img src="resources/img/logo-main-blue.png" alt="Residencial Cantinho da Costeira" class="h-9 w-auto">
-                <span class="hidden sm:inline">
-                    Residencial <span class="text-teal-600">Cantinho da Costeira</span>
-                </span>
-            </a>
-            <nav class="hidden md:flex gap-6 text-sm">
-                <a href="#apartments" class="hover:text-teal-600" data-i18n="nav.apartments"></a>
-                <a href="#services" class="hover:text-teal-600" data-i18n="nav.services"></a>
-                <a href="#gallery" class="hover:text-teal-600" data-i18n="nav.photos"></a>
-                <a href="#location" class="hover:text-teal-600" data-i18n="nav.location"></a>
-                <a href="#contact" class="hover:text-teal-600 font-medium" data-i18n="nav.contact"></a>
-            </nav>
-            <!-- Mobile menu button -->
-            <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-700 hover:text-teal-600" aria-label="Menu" aria-expanded="false">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-            <!-- Language selector -->
-            <div class="flex items-center gap-2 text-xs">
-                <button id="btn-pt"
-                    class="flex items-center gap-1 px-2 py-1 rounded-full border border-slate-300 bg-slate-100 font-medium">
-                    <span aria-hidden="true">🇧🇷</span>
-                    <span class="hidden sm:inline">PT</span>
-                    <span class="sr-only">Português</span>
-                </button>
-                <button id="btn-es"
-                    class="flex items-center gap-1 px-2 py-1 rounded-full border border-slate-200 hover:bg-slate-100">
-                    <span aria-hidden="true">🇪🇸</span>
-                    <span class="hidden sm:inline">ES</span>
-                    <span class="sr-only">Español</span>
-                </button>
+    <header class="sticky top-0 z-20 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#inicio" class="flex items-center gap-3 group" aria-label="Ir al inicio">
+                    <img src="resources/img/logo-main-blue.png" alt="Residencial Cantinho da Costeira" 
+                        class="h-10 w-auto transition-transform group-hover:scale-105">
+                    <span class="hidden sm:inline-block">
+                        <span class="text-slate-700 font-semibold text-lg">Residencial</span>
+                        <span class="text-teal-600 font-bold text-lg"> Cantinho da Costeira</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-8 text-sm" aria-label="Navegación principal">
+                    <a href="#apartments" class="text-slate-600 hover:text-teal-600 transition-colors font-medium relative group"
+                        data-i18n="nav.apartments">
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-600 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#services" class="text-slate-600 hover:text-teal-600 transition-colors font-medium relative group"
+                        data-i18n="nav.services">
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-600 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#gallery" class="text-slate-600 hover:text-teal-600 transition-colors font-medium relative group"
+                        data-i18n="nav.photos">
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-600 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#location" class="text-slate-600 hover:text-teal-600 transition-colors font-medium relative group"
+                        data-i18n="nav.location">
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-600 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="text-slate-600 hover:text-teal-600 transition-colors font-semibold relative group"
+                        data-i18n="nav.contact">
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-600 transition-all group-hover:w-full"></span>
+                    </a>
+                </nav>
+
+                <!-- Language selector & Mobile menu button -->
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 text-xs border border-slate-200 rounded-full p-1 bg-slate-50">
+                        <button id="btn-pt"
+                            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-transparent bg-white shadow-sm font-medium transition-all hover:scale-105"
+                            aria-label="Cambiar a Português">
+                            <span aria-hidden="true">🇧🇷</span>
+                            <span class="hidden sm:inline">PT</span>
+                        </button>
+                        <button id="btn-es"
+                            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-transparent hover:bg-white transition-all hover:scale-105"
+                            aria-label="Cambiar a Español">
+                            <span aria-hidden="true">🇪🇸</span>
+                            <span class="hidden sm:inline">ES</span>
+                        </button>
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-700 hover:text-teal-600 rounded-lg hover:bg-slate-100 transition-colors"
+                        aria-label="Abrir menú" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Mobile menu overlay -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden"></div>
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/60 z-30 hidden md:hidden backdrop-blur-sm"></div>
     
     <!-- Mobile menu -->
-    <nav id="mobile-menu" class="fixed top-0 right-0 h-full w-64 bg-white shadow-xl z-40 transform translate-x-full transition-transform duration-300 md:hidden">
-        <div class="flex items-center justify-between p-4 border-b border-slate-200">
-            <span class="font-semibold text-lg">Menu</span>
-            <button id="mobile-menu-close" class="p-2 text-slate-700 hover:text-teal-600" aria-label="Cerrar menu">
+    <nav id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-40 transform translate-x-full md:hidden">
+        <div class="flex items-center justify-between p-6 border-b border-slate-200 bg-gradient-to-r from-teal-50 to-white">
+            <span class="font-bold text-lg text-slate-800" data-i18n="nav.menu">Menú</span>
+            <button id="mobile-menu-close" class="p-2 text-slate-700 hover:text-teal-600 rounded-lg hover:bg-slate-100 transition-colors" aria-label="Cerrar menú">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
-        <div class="flex flex-col p-4 gap-4">
-            <a href="#apartments" class="text-sm hover:text-teal-600 py-2" data-i18n="nav.apartments"></a>
-            <a href="#services" class="text-sm hover:text-teal-600 py-2" data-i18n="nav.services"></a>
-            <a href="#gallery" class="text-sm hover:text-teal-600 py-2" data-i18n="nav.photos"></a>
-            <a href="#location" class="text-sm hover:text-teal-600 py-2" data-i18n="nav.location"></a>
-            <a href="#contact" class="text-sm hover:text-teal-600 font-medium py-2" data-i18n="nav.contact"></a>
+        <div class="flex flex-col p-6 gap-1">
+            <a href="#apartments" class="text-slate-700 hover:text-teal-600 hover:bg-teal-50 py-3 px-4 rounded-lg transition-all font-medium" data-i18n="nav.apartments"></a>
+            <a href="#services" class="text-slate-700 hover:text-teal-600 hover:bg-teal-50 py-3 px-4 rounded-lg transition-all font-medium" data-i18n="nav.services"></a>
+            <a href="#gallery" class="text-slate-700 hover:text-teal-600 hover:bg-teal-50 py-3 px-4 rounded-lg transition-all font-medium" data-i18n="nav.photos"></a>
+            <a href="#location" class="text-slate-700 hover:text-teal-600 hover:bg-teal-50 py-3 px-4 rounded-lg transition-all font-medium" data-i18n="nav.location"></a>
+            <a href="#contact" class="text-slate-700 hover:text-teal-600 hover:bg-teal-50 py-3 px-4 rounded-lg transition-all font-semibold" data-i18n="nav.contact"></a>
         </div>
     </nav>
 
     <main id="inicio">
-        <!-- Hero -->
-        <section class="relative">
-            <div class="max-w-6xl mx-auto px-4 py-12 md:py-20 grid md:grid-cols-2 gap-10 items-center">
-                <div>
-                    <p class="text-xs uppercase tracking-[0.25em] text-teal-600 mb-3" data-i18n="hero.tagline"></p>
-                    <h1 class="text-3xl md:text-5xl font-semibold leading-tight mb-4" data-i18n="hero.title"></h1>
-                    <p class="text-slate-600 mb-6 text-sm" data-i18n="hero.subtitle"></p>
-                    <div class="flex flex-wrap gap-3">
-                        <!-- WhatsApp link -->
-                        <a id="whatsapp-main"
-                            href="https://wa.me/5547974003344?text=Ol%C3%A1,%20gostaria%20de%20saber%20sobre%20disponibilidade%20no%20Residencial%20Cantinho%20da%20Costeira"
-                            class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-teal-600 text-white text-sm font-medium shadow hover:bg-teal-700 transition-colors">
-                            <!-- Ícono WhatsApp -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
-                                viewBox="0 0 24 24" aria-hidden="true">
-                                <path
-                                    d="M20.52 3.48A11.78 11.78 0 0 0 12 0C5.37 0 .02 5.34.02 11.94c0 2.1.55 4.15 1.6 5.96L0 24l6.33-1.64a12 12 0 0 0 5.67 1.44h.01c6.63 0 12-5.37 12-12a11.9 11.9 0 0 0-3.49-8.32ZM12 21.5a9.56 9.56 0 0 1-4.88-1.34l-.35-.21-3.76.97 1-3.66-.23-.38a9.48 9.48 0 0 1-1.45-5.11C2.33 6.18 6.6 1.9 12 1.9a9.6 9.6 0 0 1 9.6 9.6c0 5.3-4.3 9.6-9.6 9.6Zm5.15-7.27c-.28-.14-1.65-.82-1.91-.91-.26-.1-.45-.14-.64.14-.19.28-.74.91-.91 1.1-.17.19-.34.21-.62.07-.28-.14-1.18-.44-2.25-1.39-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.12-.12.28-.31.43-.47.14-.16.19-.28.28-.47.1-.19.05-.35-.02-.49-.07-.14-.64-1.53-.88-2.1-.23-.55-.46-.47-.64-.47-.17 0-.37-.02-.57-.02s-.52.07-.79.35c-.26.28-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.14.19 2.1 3.2 5.05 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.75-.72 2-1.42.25-.71.25-1.31.17-1.42-.07-.1-.26-.17-.54-.31Z" />
-                            </svg>
-                            <!-- Texto según idioma -->
-                            <span data-i18n="hero.whatsappBtn"></span>
-                        </a>
-
-                        <a href="#apartments"
-                            class="inline-flex items-center justify-center px-5 py-3 rounded-full border border-slate-300 text-sm font-medium hover:bg-slate-100 transition-colors"
-                            data-i18n="hero.seeApartments">
-                        </a>
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden">
+            <div class="absolute inset-0 gradient-overlay"></div>
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-32">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="animate-on-scroll">
+                        <p class="text-xs uppercase tracking-[0.3em] text-teal-600 font-semibold mb-4" data-i18n="hero.tagline"></p>
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-slate-900" data-i18n="hero.title"></h1>
+                        <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl" data-i18n="hero.subtitle"></p>
+                        <div class="flex flex-wrap gap-4">
+                            <a id="whatsapp-main"
+                                href="https://wa.me/5547974003344?text=Ol%C3%A1,%20gostaria%20de%20saber%20sobre%20disponibilidade%20no%20Residencial%20Cantinho%20da%20Costeira"
+                                class="btn-primary inline-flex items-center gap-3 px-6 py-4 rounded-full bg-teal-600 text-white font-semibold shadow-lg hover:bg-teal-700 hover:shadow-xl transform hover:scale-105">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M20.52 3.48A11.78 11.78 0 0 0 12 0C5.37 0 .02 5.34.02 11.94c0 2.1.55 4.15 1.6 5.96L0 24l6.33-1.64a12 12 0 0 0 5.67 1.44h.01c6.63 0 12-5.37 12-12a11.9 11.9 0 0 0-3.49-8.32ZM12 21.5a9.56 9.56 0 0 1-4.88-1.34l-.35-.21-3.76.97 1-3.66-.23-.38a9.48 9.48 0 0 1-1.45-5.11C2.33 6.18 6.6 1.9 12 1.9a9.6 9.6 0 0 1 9.6 9.6c0 5.3-4.3 9.6-9.6 9.6Zm5.15-7.27c-.28-.14-1.65-.82-1.91-.91-.26-.1-.45-.14-.64.14-.19.28-.74.91-.91 1.1-.17.19-.34.21-.62.07-.28-.14-1.18-.44-2.25-1.39-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.12-.12.28-.31.43-.47.14-.16.19-.28.28-.47.1-.19.05-.35-.02-.49-.07-.14-.64-1.53-.88-2.1-.23-.55-.46-.47-.64-.47-.17 0-.37-.02-.57-.02s-.52.07-.79.35c-.26.28-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.14.19 2.1 3.2 5.05 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.75-.72 2-1.42.25-.71.25-1.31.17-1.42-.07-.1-.26-.17-.54-.31Z" />
+                                </svg>
+                                <span data-i18n="hero.whatsappBtn"></span>
+                            </a>
+                            <a href="#apartments"
+                                class="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full border-2 border-slate-300 text-slate-700 font-semibold hover:border-teal-600 hover:text-teal-600 hover:bg-teal-50 transition-all transform hover:scale-105"
+                                data-i18n="hero.seeApartments">
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="relative h-64 md:h-80 rounded-3xl overflow-hidden shadow-lg bg-slate-200">
-                    <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Residencial próximo à praia" class="w-full h-full object-cover" />
-                    <div class="absolute bottom-3 left-3 bg-white/80 backdrop-blur px-3 py-2 rounded-2xl text-xs shadow"
-                        data-i18n="hero.badge">
+                    <div class="relative animate-on-scroll">
+                        <div class="relative h-80 md:h-96 rounded-3xl overflow-hidden shadow-2xl bg-slate-200 group">
+                            <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                alt="Residencial próximo à praia" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-lg">
+                                <p class="text-sm font-semibold text-slate-800" data-i18n="hero.badge"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Apartments -->
-        <section id="apartments" class="py-12 md:py-16 bg-white">
-            <div class="max-w-6xl mx-auto px-4">
-                <div class="flex items-center justify-between mb-8 gap-4">
-                    <div>
-                        <h2 class="text-2xl md:text-3xl font-semibold mb-1" data-i18n="apartments.title"></h2>
-                        <p class="text-slate-600 text-sm" data-i18n="apartments.subtitle"></p>
-                    </div>
+        <!-- Apartments Section -->
+        <section id="apartments" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 animate-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3 text-slate-900" data-i18n="apartments.title"></h2>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto" data-i18n="apartments.subtitle"></p>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-6">
-                    <!-- Apt 1 -->
-                    <article
-                        class="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden shadow-sm flex flex-col">
-                        <div class="h-40 bg-slate-200">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Apartment 1 -->
+                    <article class="card-hover bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col animate-on-scroll">
+                        <div class="relative h-56 bg-slate-200 overflow-hidden group">
                             <img src="https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                                alt="Apartamento até 5 pessoas" class="w-full h-full object-cover" loading="lazy">
+                                alt="Apartamento até 5 pessoas" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
-                        <div class="p-4 flex-1 flex flex-col">
-                            <h3 class="font-semibold mb-1 text-sm" data-i18n="apartments.card1.title"></h3>
-                            <p class="text-xs text-slate-600 mb-2" data-i18n="apartments.card1.desc"></p>
-                            <p class="text-xs text-slate-500 mb-3" data-i18n="apartments.card1.capacity"></p>
-                            <div class="mt-auto flex items-center justify-between text-xs">
-                                <span class="font-medium text-teal-600" data-i18n="apartments.card1.price"></span>
-                                <a href="#contact" class="underline text-slate-700 hover:text-teal-600"
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card1.title"></h3>
+                            <p class="text-sm text-slate-600 mb-3 leading-relaxed" data-i18n="apartments.card1.desc"></p>
+                            <p class="text-xs text-slate-500 mb-4 font-medium" data-i18n="apartments.card1.capacity"></p>
+                            <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
+                                <span class="font-bold text-teal-600 text-sm" data-i18n="apartments.card1.price"></span>
+                                <a href="#contact" class="text-teal-600 hover:text-teal-700 font-semibold text-sm underline underline-offset-4 transition-colors"
                                     data-i18n="apartments.card.contact"></a>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Apt 2 -->
-                    <article
-                        class="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden shadow-sm flex flex-col">
-                        <div class="h-40 bg-slate-200">
+                    <!-- Apartment 2 -->
+                    <article class="card-hover bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col animate-on-scroll">
+                        <div class="relative h-56 bg-slate-200 overflow-hidden group">
                             <img src="https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                                alt="Apartamento com dois quartos" class="w-full h-full object-cover" loading="lazy">
+                                alt="Apartamento com dois quartos" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
-                        <div class="p-4 flex-1 flex flex-col">
-                            <h3 class="font-semibold mb-1 text-sm" data-i18n="apartments.card2.title"></h3>
-                            <p class="text-xs text-slate-600 mb-2" data-i18n="apartments.card2.desc"></p>
-                            <p class="text-xs text-slate-500 mb-3" data-i18n="apartments.card2.capacity"></p>
-                            <div class="mt-auto flex items-center justify-between text-xs">
-                                <span class="font-medium text-teal-600" data-i18n="apartments.card2.price"></span>
-                                <a href="#contact" class="underline text-slate-700 hover:text-teal-600"
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card2.title"></h3>
+                            <p class="text-sm text-slate-600 mb-3 leading-relaxed" data-i18n="apartments.card2.desc"></p>
+                            <p class="text-xs text-slate-500 mb-4 font-medium" data-i18n="apartments.card2.capacity"></p>
+                            <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
+                                <span class="font-bold text-teal-600 text-sm" data-i18n="apartments.card2.price"></span>
+                                <a href="#contact" class="text-teal-600 hover:text-teal-700 font-semibold text-sm underline underline-offset-4 transition-colors"
                                     data-i18n="apartments.card.contact"></a>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Apt 3 -->
-                    <article
-                        class="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden shadow-sm flex flex-col">
-                        <div class="h-40 bg-slate-200">
+                    <!-- Apartment 3 -->
+                    <article class="card-hover bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col animate-on-scroll">
+                        <div class="relative h-56 bg-slate-200 overflow-hidden group">
                             <img src="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                                alt="Apartamento tipo loft" class="w-full h-full object-cover" loading="lazy">
+                                alt="Apartamento tipo loft" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
-                        <div class="p-4 flex-1 flex flex-col">
-                            <h3 class="font-semibold mb-1 text-sm" data-i18n="apartments.card3.title"></h3>
-                            <p class="text-xs text-slate-600 mb-2" data-i18n="apartments.card3.desc"></p>
-                            <p class="text-xs text-slate-500 mb-3" data-i18n="apartments.card3.capacity"></p>
-                            <div class="mt-auto flex items-center justify-between text-xs">
-                                <span class="font-medium text-teal-600" data-i18n="apartments.card3.price"></span>
-                                <a href="#contact" class="underline text-slate-700 hover:text-teal-600"
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card3.title"></h3>
+                            <p class="text-sm text-slate-600 mb-3 leading-relaxed" data-i18n="apartments.card3.desc"></p>
+                            <p class="text-xs text-slate-500 mb-4 font-medium" data-i18n="apartments.card3.capacity"></p>
+                            <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
+                                <span class="font-bold text-teal-600 text-sm" data-i18n="apartments.card3.price"></span>
+                                <a href="#contact" class="text-teal-600 hover:text-teal-700 font-semibold text-sm underline underline-offset-4 transition-colors"
                                     data-i18n="apartments.card.contact"></a>
                             </div>
                         </div>
@@ -255,123 +401,131 @@
             </div>
         </section>
 
-        <!-- Services -->
-        <section id="services" class="py-12 md:py-16">
-            <div class="max-w-6xl mx-auto px-4">
-                <h2 class="text-2xl md:3xl font-semibold mb-6" data-i18n="services.title"></h2>
-                <div class="grid md:grid-cols-3 gap-4 text-sm">
-                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-                        <p class="font-medium mb-1" data-i18n="services.card1.title"></p>
-                        <p class="text-slate-600 text-xs" data-i18n="services.card1.desc"></p>
+        <!-- Services Section -->
+        <section id="services" class="py-16 md:py-24 bg-gradient-to-br from-slate-50 to-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 animate-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3 text-slate-900" data-i18n="services.title"></h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow animate-on-scroll">
+                        <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                        </div>
+                        <p class="font-bold text-lg mb-2 text-slate-900" data-i18n="services.card1.title"></p>
+                        <p class="text-sm text-slate-600 leading-relaxed" data-i18n="services.card1.desc"></p>
                     </div>
-                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-                        <p class="font-medium mb-1" data-i18n="services.card2.title"></p>
-                        <p class="text-slate-600 text-xs" data-i18n="services.card2.desc"></p>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow animate-on-scroll">
+                        <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        </div>
+                        <p class="font-bold text-lg mb-2 text-slate-900" data-i18n="services.card2.title"></p>
+                        <p class="text-sm text-slate-600 leading-relaxed" data-i18n="services.card2.desc"></p>
                     </div>
-                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-                        <p class="font-medium mb-1" data-i18n="services.card3.title"></p>
-                        <p class="text-slate-600 text-xs" data-i18n="services.card3.desc"></p>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow animate-on-scroll">
+                        <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <p class="font-bold text-lg mb-2 text-slate-900" data-i18n="services.card3.title"></p>
+                        <p class="text-sm text-slate-600 leading-relaxed" data-i18n="services.card3.desc"></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Gallery -->
-        <section id="gallery" class="py-12 md:py-16 bg-white">
-            <div class="max-w-6xl mx-auto px-4">
-                <h2 class="text-2xl md:text-3xl font-semibold mb-6" data-i18n="gallery.title"></h2>
-                <p class="text-xs text-slate-600 mb-4" data-i18n="gallery.subtitle"></p>
-                <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-                    <!-- Replace these with real photos -->
-                    <img class="rounded-2xl h-40 w-full object-cover gallery-img cursor-pointer"
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 animate-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3 text-slate-900" data-i18n="gallery.title"></h2>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto" data-i18n="gallery.subtitle"></p>
+                </div>
+                <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
                         src="https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=1200"
                         alt="Foto 1" loading="lazy" data-gallery>
-                    <img class="rounded-2xl h-40 w-full object-cover gallery-img cursor-pointer"
+                    <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
                         src="https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=1200"
                         alt="Foto 2" loading="lazy" data-gallery>
-                    <img class="rounded-2xl h-40 w-full object-cover gallery-img cursor-pointer"
+                    <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
                         src="https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg?auto=compress&cs=tinysrgb&w=1200"
                         alt="Foto 3" loading="lazy" data-gallery>
-                    <img class="rounded-2xl h-40 w-full object-cover gallery-img cursor-pointer"
+                    <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
                         src="https://images.pexels.com/photos/279719/pexels-photo-279719.jpeg?auto=compress&cs=tinysrgb&w=1200"
                         alt="Foto 4" loading="lazy" data-gallery>
-                    <img class="rounded-2xl h-40 w-full object-cover gallery-img cursor-pointer"
+                    <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
                         src="https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg?auto=compress&cs=tinysrgb&w=1200"
                         alt="Foto 5" loading="lazy" data-gallery>
-                    <img class="rounded-2xl h-40 w-full object-cover gallery-img cursor-pointer"
+                    <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
                         src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200"
                         alt="Foto 6" loading="lazy" data-gallery>
                 </div>
             </div>
         </section>
 
-        <!-- Location -->
-        <section id="location" class="py-12 md:py-16">
-            <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-start">
-                <div>
-                    <h2 class="text-2xl md:text-3xl font-semibold mb-3" data-i18n="location.title"></h2>
-                    <p class="text-slate-600 text-sm mb-3" data-i18n="location.desc1"></p>
-                    <p class="text-slate-600 text-sm mb-3" data-i18n="location.desc2"></p>
-                    <p class="text-slate-600 text-xs">
-                        <a href="https://maps.app.goo.gl/HjdH4ZtXETNSEvXP9" target="_blank"
-                            class="inline-flex items-center gap-2 text-sm text-teal-700 underline">
-                            <!-- Ícono pin mapa -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor"
-                                stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <!-- Location Section -->
+        <section id="location" class="py-16 md:py-24 bg-gradient-to-br from-slate-50 to-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-start">
+                    <div class="animate-on-scroll">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900" data-i18n="location.title"></h2>
+                        <p class="text-base text-slate-600 mb-4 leading-relaxed" data-i18n="location.desc1"></p>
+                        <p class="text-base text-slate-600 mb-6 leading-relaxed" data-i18n="location.desc2"></p>
+                        <a href="https://maps.app.goo.gl/HjdH4ZtXETNSEvXP9" target="_blank" rel="noopener noreferrer"
+                            class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-teal-600 text-white font-semibold shadow-lg hover:bg-teal-700 hover:shadow-xl transition-all transform hover:scale-105">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="M12 22s7-6.29 7-12A7 7 0 1 0 5 10c0 5.71 7 12 7 12Z" />
                                 <circle cx="12" cy="10" r="3" />
                             </svg>
                             <span>Ver no Google Maps</span>
                         </a>
-                    </p>
-                </div>
-
-                <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-sm h-64 md:h-72 bg-slate-100">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.24773599068!2d-48.54450972361581!3d-27.179949476488947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94d8a5003f4e4b77%3A0x5b51614de24cdcc!2sResidencial%20Cantinho%20da%20costeira!5e0!3m2!1sen!2sar!4v1763763547266!5m2!1sen!2sar"
-                        class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade" title="Ubicación del Residencial Cantinho da Costeira en Google Maps">
-                    </iframe>
+                    </div>
+                    <div class="rounded-3xl overflow-hidden border-2 border-slate-200 shadow-xl h-80 md:h-96 bg-slate-100 animate-on-scroll">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.24773599068!2d-48.54450972361581!3d-27.179949476488947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94d8a5003f4e4b77%3A0x5b51614de24cdcc!2sResidencial%20Cantinho%20da%20costeira!5e0!3m2!1sen!2sar!4v1763763547266!5m2!1sen!2sar"
+                            class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade" title="Ubicación del Residencial Cantinho da Costeira en Google Maps">
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact -->
-        <section id="contact" class="py-12 md:py-16 bg-white">
-            <div class="max-w-6xl mx-auto px-4">
-                <h2 class="text-2xl md:text-3xl font-semibold mb-3" data-i18n="contact.title"></h2>
-                <p class="text-slate-600 text-sm mb-6" data-i18n="contact.subtitle"></p>
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 animate-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3 text-slate-900" data-i18n="contact.title"></h2>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto" data-i18n="contact.subtitle"></p>
+                </div>
 
-                <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Columna izquierda: datos de contacto con íconos -->
-                    <div class="space-y-4 text-sm">
-                        <!-- WhatsApp -->
-                        <div>
-                            <p class="text-xs uppercase tracking-[0.25em] text-slate-500 mb-1"
-                                data-i18n="contact.whatsappLabel"></p>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- Contact Info -->
+                    <div class="space-y-6 animate-on-scroll">
+                        <div class="bg-gradient-to-br from-teal-50 to-white border border-slate-200 rounded-2xl p-6 shadow-md">
+                            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 mb-3 font-semibold" data-i18n="contact.whatsappLabel"></p>
                             <a id="whatsapp-contact"
                                 href="https://wa.me/5547974003344?text=Ol%C3%A1,%20gostaria%20de%20saber%20sobre%20disponibilidade%20no%20Residencial%20Cantinho%20da%20Costeira"
-                                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-600 text-white text-xs font-medium shadow hover:bg-teal-700 transition-colors">
-                                <!-- Ícono WhatsApp -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor"
-                                    viewBox="0 0 24 24" aria-hidden="true">
-                                    <path
-                                        d="M20.52 3.48A11.78 11.78 0 0 0 12 0C5.37 0 .02 5.34.02 11.94c0 2.1.55 4.15 1.6 5.96L0 24l6.33-1.64a12 12 0 0 0 5.67 1.44h.01c6.63 0 12-5.37 12-12a11.9 11.9 0 0 0-3.49-8.32ZM12 21.5a9.56 9.56 0 0 1-4.88-1.34l-.35-.21-3.76.97 1-3.66-.23-.38a9.48 9.48 0 0 1-1.45-5.11C2.33 6.18 6.6 1.9 12 1.9a9.6 9.6 0 0 1 9.6 9.6c0 5.3-4.3 9.6-9.6 9.6Zm5.15-7.27c-.28-.14-1.65-.82-1.91-.91-.26-.1-.45-.14-.64.14-.19.28-.74.91-.91 1.1-.17.19-.34.21-.62.07-.28-.14-1.18-.44-2.25-1.39-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.12-.12.28-.31.43-.47.14-.16.19-.28.28-.47.1-.19.05-.35-.02-.49-.07-.14-.64-1.53-.88-2.1-.23-.55-.46-.47-.64-.47-.17 0-.37-.02-.57-.02s-.52.07-.79.35c-.26.28-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.14.19 2.1 3.2 5.05 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.75-.72 2-1.42.25-.71.25-1.31.17-1.42-.07-.1-.26-.17-.54-.31Z" />
+                                class="btn-primary inline-flex items-center gap-3 px-5 py-3 rounded-full bg-teal-600 text-white font-semibold shadow-lg hover:bg-teal-700 hover:shadow-xl transition-all transform hover:scale-105">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M20.52 3.48A11.78 11.78 0 0 0 12 0C5.37 0 .02 5.34.02 11.94c0 2.1.55 4.15 1.6 5.96L0 24l6.33-1.64a12 12 0 0 0 5.67 1.44h.01c6.63 0 12-5.37 12-12a11.9 11.9 0 0 0-3.49-8.32ZM12 21.5a9.56 9.56 0 0 1-4.88-1.34l-.35-.21-3.76.97 1-3.66-.23-.38a9.48 9.48 0 0 1-1.45-5.11C2.33 6.18 6.6 1.9 12 1.9a9.6 9.6 0 0 1 9.6 9.6c0 5.3-4.3 9.6-9.6 9.6Zm5.15-7.27c-.28-.14-1.65-.82-1.91-.91-.26-.1-.45-.14-.64.14-.19.28-.74.91-.91 1.1-.17.19-.34.21-.62.07-.28-.14-1.18-.44-2.25-1.39-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.12-.12.28-.31.43-.47.14-.16.19-.28.28-.47.1-.19.05-.35-.02-.49-.07-.14-.64-1.53-.88-2.1-.23-.55-.46-.47-.64-.47-.17 0-.37-.02-.57-.02s-.52.07-.79.35c-.26.28-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.14.19 2.1 3.2 5.05 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.75-.72 2-1.42.25-.71.25-1.31.17-1.42-.07-.1-.26-.17-.54-.31Z" />
                                 </svg>
                                 <span data-i18n="contact.whatsappBtn"></span>
                             </a>
                         </div>
 
-                        <!-- Email -->
-                        <div>
-                            <p class="text-xs uppercase tracking-[0.25em] text-slate-500 mb-1"
-                                data-i18n="contact.emailLabel">
-                            </p>
+                        <div class="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl p-6 shadow-md">
+                            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 mb-3 font-semibold" data-i18n="contact.emailLabel"></p>
                             <a href="mailto:cantinhodacosteira@gmail.com"
-                                class="inline-flex items-center gap-2 text-sm text-teal-700 underline">
-                                <!-- Ícono Email -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
-                                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                class="inline-flex items-center gap-3 text-base text-teal-600 hover:text-teal-700 font-medium transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <rect x="3" y="5" width="18" height="14" rx="2" ry="2" />
                                     <path d="m3 7 9 6 9-6" />
                                 </svg>
@@ -379,15 +533,11 @@
                             </a>
                         </div>
 
-                        <!-- Instagram -->
-                        <div>
-                            <p class="text-xs uppercase tracking-[0.25em] text-slate-500 mb-1"
-                                data-i18n="contact.instagramLabel"></p>
-                            <a href="https://www.instagram.com/cantinhodacosteira" target="_blank"
-                                class="inline-flex items-center gap-2 text-sm text-teal-700 underline">
-                                <!-- Ícono Instagram -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
-                                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <div class="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl p-6 shadow-md">
+                            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 mb-3 font-semibold" data-i18n="contact.instagramLabel"></p>
+                            <a href="https://www.instagram.com/cantinhodacosteira" target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center gap-3 text-base text-teal-600 hover:text-teal-700 font-medium transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                                     <circle cx="12" cy="12" r="4" />
                                     <circle cx="17" cy="7" r="1" />
@@ -395,114 +545,143 @@
                                 <span>@cantinhodacosteira</span>
                             </a>
                         </div>
-
                     </div>
 
-                    <!-- Columna derecha: formulario -->
+                    <!-- Contact Form -->
                     <form action="https://formspree.io/f/xyzvewpp" method="POST"
-                        class="bg-slate-50 border border-slate-200 rounded-3xl p-4 space-y-3 text-xs">
-                        <div class="grid md:grid-cols-2 gap-3">
+                        class="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-lg space-y-4 animate-on-scroll">
+                        <div class="grid md:grid-cols-2 gap-4">
                             <div>
-                                <label for="form-name" class="block mb-1 font-medium" data-i18n="form.nameLabel"></label>
+                                <label for="form-name" class="block mb-2 font-semibold text-slate-700" data-i18n="form.nameLabel"></label>
                                 <input type="text" name="name" id="form-name" required
-                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" placeholder=""
-                                    data-i18n-placeholder="form.namePlaceholder" />
+                                    class="w-full rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all"
+                                    placeholder="" data-i18n-placeholder="form.namePlaceholder" />
                             </div>
                             <div>
-                                <label for="form-email" class="block mb-1 font-medium" data-i18n="form.emailLabel"></label>
+                                <label for="form-email" class="block mb-2 font-semibold text-slate-700" data-i18n="form.emailLabel"></label>
                                 <input type="email" name="email" id="form-email" required
-                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" placeholder=""
-                                    data-i18n-placeholder="form.emailPlaceholder" />
+                                    class="w-full rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all"
+                                    placeholder="" data-i18n-placeholder="form.emailPlaceholder" />
                             </div>
                         </div>
-                        <div class="grid md:grid-cols-2 gap-3">
+                        <div class="grid md:grid-cols-2 gap-4">
                             <div>
-                                <label for="check-in" class="block mb-1 font-medium" data-i18n="form.checkInLabel"></label>
+                                <label for="check-in" class="block mb-2 font-semibold text-slate-700" data-i18n="form.checkInLabel"></label>
                                 <input type="date" name="check_in" id="check-in"
-                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
-                                <p class="text-red-600 text-[10px] mt-1 hidden" id="check-in-error"></p>
+                                    class="w-full rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all" />
+                                <p class="text-red-600 text-xs mt-1 hidden" id="check-in-error"></p>
                             </div>
                             <div>
-                                <label for="check-out" class="block mb-1 font-medium" data-i18n="form.checkOutLabel"></label>
+                                <label for="check-out" class="block mb-2 font-semibold text-slate-700" data-i18n="form.checkOutLabel"></label>
                                 <input type="date" name="check_out" id="check-out"
-                                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
-                                <p class="text-red-600 text-[10px] mt-1 hidden" id="check-out-error"></p>
+                                    class="w-full rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all" />
+                                <p class="text-red-600 text-xs mt-1 hidden" id="check-out-error"></p>
                             </div>
                         </div>
                         <div>
-                            <label for="form-message" class="block mb-1 font-medium" data-i18n="form.messageLabel"></label>
-                            <textarea name="message" id="form-message" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs"
-                                rows="3" placeholder="" data-i18n-placeholder="form.messagePlaceholder"></textarea>
+                            <label for="form-message" class="block mb-2 font-semibold text-slate-700" data-i18n="form.messageLabel"></label>
+                            <textarea name="message" id="form-message" rows="4"
+                                class="w-full rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all resize-none"
+                                placeholder="" data-i18n-placeholder="form.messagePlaceholder"></textarea>
                         </div>
-
-                        <!-- idioma actual -->
                         <input type="hidden" name="lang" id="form-lang" value="pt" />
-
-                        <p class="text-[11px] text-slate-500" data-i18n="form.note"></p>
-
+                        <p class="text-xs text-slate-500" data-i18n="form.note"></p>
                         <button type="submit"
-                            class="w-full mt-1 inline-flex items-center justify-center px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors"
+                            class="btn-primary w-full mt-2 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 hover:shadow-xl transition-all transform hover:scale-105"
                             data-i18n="form.submitDemo">
                         </button>
                     </form>
                 </div>
             </div>
         </section>
-
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-200 py-4 text-center text-[11px] text-slate-500">
-        <div class="flex flex-col items-center gap-2">
-            <img src="resources/img/favicon-64x64.png" alt="Residencial Cantinho da Costeira" class="h-8 w-auto" loading="lazy">
-            <p>© <span id="year"></span> Residencial Cantinho da Costeira - Zimbros, Bombinhas.</p>
+    <footer class="border-t border-slate-200 bg-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center gap-4">
+                <img src="resources/img/favicon-64x64.png" alt="Residencial Cantinho da Costeira" class="h-10 w-auto opacity-80" loading="lazy">
+                <p class="text-sm text-slate-600">© <span id="year"></span> Residencial Cantinho da Costeira - Zimbros, Bombinhas.</p>
+                
+                <!-- Developer Signature -->
+                <div class="mt-4 pt-4 border-t border-slate-200 flex flex-col items-center gap-2">
+                    <p class="text-xs text-slate-500">Desarrollado por <span class="font-semibold text-slate-700">Luciano Ramaglia</span></p>
+                    <div class="flex items-center gap-4">
+                        <a href="mailto:luciano.ramaglia@gmail.com" 
+                           class="flex items-center gap-1.5 text-xs text-slate-600 hover:text-teal-600 transition-colors"
+                           aria-label="Enviar email a Luciano Ramaglia">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="3" y="5" width="18" height="14" rx="2" ry="2" />
+                                <path d="m3 7 9 6 9-6" />
+                            </svg>
+                            <span class="hidden sm:inline">Email</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/lucianoaramaglia/" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="flex items-center gap-1.5 text-xs text-slate-600 hover:text-teal-600 transition-colors"
+                           aria-label="Ver perfil de LinkedIn de Luciano Ramaglia">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            <span class="hidden sm:inline">LinkedIn</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
     <!-- Lightbox -->
-    <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center">
-        <button id="lightbox-close" class="absolute top-4 right-4 text-white hover:text-teal-400 transition-colors" aria-label="Cerrar">
+    <div id="lightbox" class="fixed inset-0 bg-black/95 z-50 hidden items-center justify-center">
+        <button id="lightbox-close" class="absolute top-6 right-6 text-white hover:text-teal-400 transition-colors p-2 rounded-full hover:bg-white/10" aria-label="Cerrar">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
-        <button id="lightbox-prev" class="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-teal-400 transition-colors" aria-label="Anterior">
+        <button id="lightbox-prev" class="absolute left-6 top-1/2 -translate-y-1/2 text-white hover:text-teal-400 transition-colors p-3 rounded-full hover:bg-white/10" aria-label="Anterior">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
         </button>
-        <button id="lightbox-next" class="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-teal-400 transition-colors" aria-label="Siguiente">
+        <button id="lightbox-next" class="absolute right-6 top-1/2 -translate-y-1/2 text-white hover:text-teal-400 transition-colors p-3 rounded-full hover:bg-white/10" aria-label="Siguiente">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
         </button>
-        <img id="lightbox-img" src="" alt="" class="max-w-[90%] max-h-[90%] object-contain">
+        <img id="lightbox-img" src="" alt="" class="max-w-[90%] max-h-[90%] object-contain rounded-lg shadow-2xl">
     </div>
 
     <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // WhatsApp links por idioma
-        const whatsappLinks = {
-            pt: "https://wa.me/5547974003344?text=Ol%C3%A1,%20gostaria%20de%20saber%20sobre%20disponibilidade%20no%20Residencial%20Cantinho%20da%20Costeira",
-            es: "https://wa.me/5547974003344?text=Hola%2C%20quiero%20consultar%20por%20disponibilidad%20en%20el%20Residencial%20Cantinho%20da%20Costeira"
+        // ============================================
+        // CONFIGURACIÓN Y CONSTANTES
+        // ============================================
+        const CONFIG = {
+            whatsapp: {
+                pt: "https://wa.me/5547974003344?text=Ol%C3%A1,%20gostaria%20de%20saber%20sobre%20disponibilidade%20no%20Residencial%20Cantinho%20da%20Costeira",
+                es: "https://wa.me/5547974003344?text=Hola%2C%20quiero%20consultar%20por%20disponibilidad%20en%20el%20Residencial%20Cantinho%20da%20Costeira"
+            },
+            storageKey: 'preferredLang',
+            defaultLang: 'pt'
         };
 
+        // ============================================
+        // TRADUCCIONES
+        // ============================================
         const translations = {
             pt: {
+                "nav.menu": "Menú",
                 "nav.apartments": "Apartamentos",
                 "nav.services": "Serviços",
                 "nav.photos": "Fotos",
                 "nav.location": "Localização",
                 "nav.contact": "Contato",
-
                 "hero.tagline": "Residencial em Zimbros (Bombinhas)",
                 "hero.title": "Seu cantinho a 100m da praia de Zimbros",
                 "hero.subtitle": "Apartamentos equipados para até 5 pessoas, com piscina comum, em um ambiente familiar e tranquilo em Bombinhas.",
                 "hero.whatsappBtn": "Falar pelo WhatsApp",
                 "hero.seeApartments": "Ver apartamentos",
                 "hero.badge": "A 100m da praia de Zimbros",
-
                 "apartments.title": "Apartamentos equipados",
                 "apartments.subtitle": "Opções confortáveis para famílias e grupos de até 5 pessoas.",
                 "apartments.card1.title": "Apartamento térreo – até 5 pessoas",
@@ -518,7 +697,6 @@
                 "apartments.card3.capacity": "Capacidade: até 5 hóspedes.",
                 "apartments.card3.price": "Consulte valores por temporada",
                 "apartments.card.contact": "Consultar",
-
                 "services.title": "Serviços e comodidades",
                 "services.card1.title": "Conforto",
                 "services.card1.desc": "Apartamentos mobiliados, ar-condicionado, roupa de cama e ambiente familiar.",
@@ -526,21 +704,17 @@
                 "services.card2.desc": "Piscina compartilhada para relaxar depois da praia.",
                 "services.card3.title": "Localização",
                 "services.card3.desc": "A apenas 100m da praia de Zimbros, próxima a mercados e restaurantes.",
-
                 "gallery.title": "Fotos",
                 "gallery.subtitle": "Em breve, adicionaremos fotos reais de cada apartamento e da piscina.",
-
                 "location.title": "Localização em Zimbros",
                 "location.desc1": "O Residencial Cantinho da Costeira fica em Zimbros (Bombinhas), a aproximadamente 100m da praia, em uma região tranquila e segura.",
                 "location.desc2": "Fácil acesso de carro e boa estrutura de serviços por perto. Entre em contato para orientações sobre como chegar desde o aeroporto ou rodoviária.",
-
                 "contact.title": "Contato",
                 "contact.subtitle": "Fale conosco para verificar disponibilidade e valores nas datas da sua viagem.",
                 "contact.whatsappLabel": "WhatsApp",
                 "contact.whatsappBtn": "Enviar mensagem",
                 "contact.emailLabel": "E-mail",
                 "contact.instagramLabel": "Instagram",
-
                 "form.nameLabel": "Nome",
                 "form.namePlaceholder": "Seu nome",
                 "form.emailLabel": "E-mail",
@@ -550,24 +724,23 @@
                 "form.messageLabel": "Mensagem",
                 "form.messagePlaceholder": "Quantidade de pessoas, dúvidas, horários aproximados, etc.",
                 "form.note": "* Formulário demonstrativo. Podemos conectá-lo a um serviço de e-mail ou sistema de reservas depois.",
-                "form.submitDemo": "Enviar (demo)",
+                "form.submitDemo": "Enviar",
                 "form.error.pastDate": "A data não pode ser no passado",
                 "form.error.checkoutBeforeCheckin": "A data de saída deve ser posterior à data de chegada"
             },
             es: {
+                "nav.menu": "Menú",
                 "nav.apartments": "Departamentos",
                 "nav.services": "Servicios",
                 "nav.photos": "Fotos",
                 "nav.location": "Ubicación",
                 "nav.contact": "Contacto",
-
                 "hero.tagline": "Residencial en Zimbros (Bombinhas)",
                 "hero.title": "Tu lugar a 100m de la playa de Zimbros",
                 "hero.subtitle": "Departamentos equipados para hasta 5 personas, con piscina común, en un ambiente familiar y tranquilo en Bombinhas.",
                 "hero.whatsappBtn": "Escribir por WhatsApp",
                 "hero.seeApartments": "Ver departamentos",
                 "hero.badge": "A 100m de la playa de Zimbros",
-
                 "apartments.title": "Departamentos equipados",
                 "apartments.subtitle": "Opciones cómodas para familias y grupos de hasta 5 personas.",
                 "apartments.card1.title": "Departamento planta baja – hasta 5 personas",
@@ -583,7 +756,6 @@
                 "apartments.card3.capacity": "Capacidad: hasta 5 huéspedes.",
                 "apartments.card3.price": "Consultar tarifas por temporada",
                 "apartments.card.contact": "Consultar",
-
                 "services.title": "Servicios y comodidades",
                 "services.card1.title": "Confort",
                 "services.card1.desc": "Departamentos amoblados, aire acondicionado, ropa de cama y ambiente familiar.",
@@ -591,21 +763,17 @@
                 "services.card2.desc": "Piscina compartida para relajarse después de la playa.",
                 "services.card3.title": "Ubicación",
                 "services.card3.desc": "A solo 100m de la playa de Zimbros, cerca de mercados y restaurantes.",
-
                 "gallery.title": "Fotos",
                 "gallery.subtitle": "Pronto agregaremos fotos reales de cada departamento y de la piscina.",
-
                 "location.title": "Ubicación en Zimbros",
                 "location.desc1": "El Residencial Cantinho da Costeira se encuentra en Zimbros (Bombinhas), a aproximadamente 100m de la playa, en una zona tranquila y segura.",
                 "location.desc2": "Fácil acceso en auto y con buena infraestructura de servicios cerca. Escribinos para más detalles sobre cómo llegar desde el aeropuerto o la terminal.",
-
                 "contact.title": "Contacto",
                 "contact.subtitle": "Escribinos para consultar disponibilidad y tarifas para tus fechas.",
                 "contact.whatsappLabel": "WhatsApp",
                 "contact.whatsappBtn": "Enviar mensaje",
                 "contact.emailLabel": "Email",
                 "contact.instagramLabel": "Instagram",
-
                 "form.nameLabel": "Nombre",
                 "form.namePlaceholder": "Tu nombre",
                 "form.emailLabel": "Email",
@@ -615,262 +783,354 @@
                 "form.messageLabel": "Mensaje",
                 "form.messagePlaceholder": "Cantidad de personas, dudas, horarios aproximados, etc.",
                 "form.note": "* Formulario de demostración. Después podemos conectarlo a un servicio de email o sistema de reservas.",
-                "form.submitDemo": "Enviar (demo)",
+                "form.submitDemo": "Enviar",
                 "form.error.pastDate": "La fecha no puede ser en el pasado",
                 "form.error.checkoutBeforeCheckin": "La fecha de salida debe ser posterior a la fecha de llegada"
             }
         };
 
-        function setLanguage(lang) {
-            const dict = translations[lang];
-            if (!dict) return;
+        // ============================================
+        // UTILIDADES
+        // ============================================
+        const Utils = {
+            getElement: (id) => document.getElementById(id),
+            getElements: (selector) => document.querySelectorAll(selector),
+            getCurrentLang: () => document.documentElement.lang || CONFIG.defaultLang,
+            formatDate: (date) => new Date(date).toISOString().split('T')[0],
+            getToday: () => Utils.formatDate(new Date())
+        };
 
-            document.documentElement.lang = lang;
+        // ============================================
+        // SISTEMA DE IDIOMAS
+        // ============================================
+        const LanguageManager = {
+            init() {
+                const savedLang = localStorage.getItem(CONFIG.storageKey) || CONFIG.defaultLang;
+                this.setLanguage(savedLang);
+                this.bindEvents();
+            },
 
-            document.querySelectorAll("[data-i18n]").forEach(el => {
-                const key = el.dataset.i18n;
-                if (dict[key]) el.textContent = dict[key];
-            });
+            setLanguage(lang) {
+                const dict = translations[lang];
+                if (!dict) return;
 
-            document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-                const key = el.dataset.i18nPlaceholder;
-                if (dict[key]) el.placeholder = dict[key];
-            });
+                document.documentElement.lang = lang;
 
-            const btnPt = document.getElementById("btn-pt");
-            const btnEs = document.getElementById("btn-es");
-            if (lang === "pt") {
-                btnPt.classList.add("bg-slate-100", "border-slate-300", "font-medium");
-                btnEs.classList.remove("bg-slate-100", "border-slate-300", "font-medium");
-            } else {
-                btnEs.classList.add("bg-slate-100", "border-slate-300", "font-medium");
-                btnPt.classList.remove("bg-slate-100", "border-slate-300", "font-medium");
+                // Actualizar textos
+                Utils.getElements("[data-i18n]").forEach(el => {
+                    const key = el.dataset.i18n;
+                    if (dict[key]) el.textContent = dict[key];
+                });
+
+                // Actualizar placeholders
+                Utils.getElements("[data-i18n-placeholder]").forEach(el => {
+                    const key = el.dataset.i18nPlaceholder;
+                    if (dict[key]) el.placeholder = dict[key];
+                });
+
+                // Actualizar botones de idioma
+                this.updateLanguageButtons(lang);
+
+                // Actualizar links de WhatsApp
+                this.updateWhatsAppLinks(lang);
+
+                // Actualizar formulario
+                const langInput = Utils.getElement("form-lang");
+                if (langInput) langInput.value = lang;
+
+                // Guardar preferencia
+                localStorage.setItem(CONFIG.storageKey, lang);
+            },
+
+            updateLanguageButtons(lang) {
+                const btnPt = Utils.getElement("btn-pt");
+                const btnEs = Utils.getElement("btn-es");
+                
+                if (lang === "pt") {
+                    btnPt?.classList.add("bg-white", "shadow-sm", "font-medium");
+                    btnEs?.classList.remove("bg-white", "shadow-sm", "font-medium");
+                } else {
+                    btnEs?.classList.add("bg-white", "shadow-sm", "font-medium");
+                    btnPt?.classList.remove("bg-white", "shadow-sm", "font-medium");
+                }
+            },
+
+            updateWhatsAppLinks(lang) {
+                const links = [
+                    Utils.getElement("whatsapp-main"),
+                    Utils.getElement("whatsapp-contact")
+                ];
+                links.forEach(link => {
+                    if (link && CONFIG.whatsapp[lang]) {
+                        link.href = CONFIG.whatsapp[lang];
+                    }
+                });
+            },
+
+            bindEvents() {
+                Utils.getElement("btn-pt")?.addEventListener("click", () => this.setLanguage("pt"));
+                Utils.getElement("btn-es")?.addEventListener("click", () => this.setLanguage("es"));
             }
+        };
 
-            // Actualizar links de WhatsApp según idioma
-            const waMain = document.getElementById("whatsapp-main");
-            const waContact = document.getElementById("whatsapp-contact");
-            if (waMain && whatsappLinks[lang]) waMain.href = whatsappLinks[lang];
-            if (waContact && whatsappLinks[lang]) waContact.href = whatsappLinks[lang];
+        // ============================================
+        // VALIDACIÓN DE FORMULARIO
+        // ============================================
+        const FormValidator = {
+            init() {
+                const checkIn = Utils.getElement("check-in");
+                const checkOut = Utils.getElement("check-out");
+                const form = Utils.getElements('form[action*="formspree"]')[0];
 
-            // Actualizar idioma en el hidden del formulario
-            const langInput = document.getElementById("form-lang");
-            if (langInput) langInput.value = lang;
-
-            // Guardar preferencia en localStorage
-            localStorage.setItem('preferredLang', lang);
-        }
-
-        document.getElementById("btn-pt").addEventListener("click", () => setLanguage("pt"));
-        document.getElementById("btn-es").addEventListener("click", () => setLanguage("es"));
-
-        // Cargar idioma guardado o usar 'pt' por defecto
-        const savedLang = localStorage.getItem('preferredLang') || 'pt';
-        setLanguage(savedLang);
-
-        // Validación de fechas
-        function validateDates() {
-            const checkIn = document.getElementById("check-in");
-            const checkOut = document.getElementById("check-out");
-            const checkInError = document.getElementById("check-in-error");
-            const checkOutError = document.getElementById("check-out-error");
-            const currentLang = document.documentElement.lang;
-            const dict = translations[currentLang];
-            let isValid = true;
-
-            // Ocultar errores previos
-            checkInError.classList.add("hidden");
-            checkOutError.classList.add("hidden");
-            checkIn.classList.remove("border-red-500");
-            checkOut.classList.remove("border-red-500");
-
-            // Establecer fecha mínima (hoy)
-            const today = new Date().toISOString().split('T')[0];
-            checkIn.setAttribute('min', today);
-            checkOut.setAttribute('min', today);
-
-            if (checkIn.value) {
-                const checkInDate = new Date(checkIn.value);
-                const todayDate = new Date();
-                todayDate.setHours(0, 0, 0, 0);
-
-                // Validar que check-in no sea en el pasado
-                if (checkInDate < todayDate) {
-                    checkInError.textContent = dict["form.error.pastDate"];
-                    checkInError.classList.remove("hidden");
-                    checkIn.classList.add("border-red-500");
-                    isValid = false;
+                if (checkIn) {
+                    checkIn.addEventListener('change', () => this.validate());
+                    checkIn.addEventListener('input', () => this.validate());
                 }
 
-                // Si hay check-out, validar que sea posterior a check-in
-                if (checkOut.value) {
+                if (checkOut) {
+                    checkOut.addEventListener('change', () => this.validate());
+                    checkOut.addEventListener('input', () => this.validate());
+                }
+
+                if (form) {
+                    form.addEventListener('submit', (e) => {
+                        if (!this.validate()) {
+                            e.preventDefault();
+                        }
+                    });
+                }
+            },
+
+            validate() {
+                const checkIn = Utils.getElement("check-in");
+                const checkOut = Utils.getElement("check-out");
+                const checkInError = Utils.getElement("check-in-error");
+                const checkOutError = Utils.getElement("check-out-error");
+                const lang = Utils.getCurrentLang();
+                const dict = translations[lang];
+                let isValid = true;
+
+                // Reset
+                [checkInError, checkOutError].forEach(el => {
+                    if (el) {
+                        el.classList.add("hidden");
+                        el.textContent = "";
+                    }
+                });
+                [checkIn, checkOut].forEach(el => {
+                    if (el) el.classList.remove("border-red-500");
+                });
+
+                // Establecer fecha mínima
+                const today = Utils.getToday();
+                if (checkIn) checkIn.setAttribute('min', today);
+                if (checkOut) checkOut.setAttribute('min', today);
+
+                // Validar check-in
+                if (checkIn?.value) {
+                    const checkInDate = new Date(checkIn.value);
+                    const todayDate = new Date();
+                    todayDate.setHours(0, 0, 0, 0);
+
+                    if (checkInDate < todayDate) {
+                        this.showError(checkIn, checkInError, dict["form.error.pastDate"]);
+                        isValid = false;
+                    }
+
+                    // Validar relación check-in < check-out
+                    if (checkOut?.value) {
+                        const checkOutDate = new Date(checkOut.value);
+                        if (checkOutDate <= checkInDate) {
+                            this.showError(checkOut, checkOutError, dict["form.error.checkoutBeforeCheckin"]);
+                            isValid = false;
+                        }
+                    }
+                }
+
+                // Validar check-out
+                if (checkOut?.value) {
                     const checkOutDate = new Date(checkOut.value);
-                    if (checkOutDate <= checkInDate) {
-                        checkOutError.textContent = dict["form.error.checkoutBeforeCheckin"];
-                        checkOutError.classList.remove("hidden");
-                        checkOut.classList.add("border-red-500");
+                    const todayDate = new Date();
+                    todayDate.setHours(0, 0, 0, 0);
+
+                    if (checkOutDate < todayDate) {
+                        this.showError(checkOut, checkOutError, dict["form.error.pastDate"]);
                         isValid = false;
                     }
                 }
-            }
 
-            if (checkOut.value) {
-                const checkOutDate = new Date(checkOut.value);
-                const todayDate = new Date();
-                todayDate.setHours(0, 0, 0, 0);
+                return isValid;
+            },
 
-                // Validar que check-out no sea en el pasado
-                if (checkOutDate < todayDate) {
-                    checkOutError.textContent = dict["form.error.pastDate"];
-                    checkOutError.classList.remove("hidden");
-                    checkOut.classList.add("border-red-500");
-                    isValid = false;
+            showError(input, errorEl, message) {
+                if (input) input.classList.add("border-red-500");
+                if (errorEl) {
+                    errorEl.textContent = message;
+                    errorEl.classList.remove("hidden");
                 }
             }
+        };
 
-            return isValid;
-        }
+        // ============================================
+        // MENÚ MÓVIL
+        // ============================================
+        const MobileMenu = {
+            init() {
+                const btn = Utils.getElement("mobile-menu-btn");
+                const close = Utils.getElement("mobile-menu-close");
+                const menu = Utils.getElement("mobile-menu");
+                const overlay = Utils.getElement("mobile-menu-overlay");
+                const links = menu?.querySelectorAll('a') || [];
 
-        // Event listeners para validación de fechas
-        const checkInInput = document.getElementById("check-in");
-        const checkOutInput = document.getElementById("check-out");
-        const contactForm = document.querySelector('form[action*="formspree"]');
+                btn?.addEventListener("click", () => this.open());
+                close?.addEventListener("click", () => this.close());
+                overlay?.addEventListener("click", () => this.close());
+                links.forEach(link => link.addEventListener("click", () => this.close()));
+            },
 
-        if (checkInInput) {
-            checkInInput.addEventListener('change', validateDates);
-            checkInInput.addEventListener('input', validateDates);
-        }
+            open() {
+                const menu = Utils.getElement("mobile-menu");
+                const overlay = Utils.getElement("mobile-menu-overlay");
+                const btn = Utils.getElement("mobile-menu-btn");
 
-        if (checkOutInput) {
-            checkOutInput.addEventListener('change', validateDates);
-            checkOutInput.addEventListener('input', validateDates);
-        }
+                menu?.classList.remove("translate-x-full");
+                overlay?.classList.remove("hidden");
+                document.body.style.overflow = "hidden";
+                btn?.setAttribute("aria-expanded", "true");
+            },
 
-        // Prevenir envío si hay errores de validación
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                if (!validateDates()) {
-                    e.preventDefault();
+            close() {
+                const menu = Utils.getElement("mobile-menu");
+                const overlay = Utils.getElement("mobile-menu-overlay");
+                const btn = Utils.getElement("mobile-menu-btn");
+
+                menu?.classList.add("translate-x-full");
+                overlay?.classList.add("hidden");
+                document.body.style.overflow = "";
+                btn?.setAttribute("aria-expanded", "false");
+            }
+        };
+
+        // ============================================
+        // LIGHTBOX
+        // ============================================
+        const Lightbox = {
+            currentIndex: 0,
+            images: [],
+
+            init() {
+                this.images = Array.from(Utils.getElements('.gallery-img[data-gallery]'));
+                const lightbox = Utils.getElement("lightbox");
+                const close = Utils.getElement("lightbox-close");
+                const prev = Utils.getElement("lightbox-prev");
+                const next = Utils.getElement("lightbox-next");
+
+                // Abrir lightbox
+                this.images.forEach((img, index) => {
+                    img.addEventListener("click", () => this.open(index));
+                });
+
+                // Cerrar lightbox
+                close?.addEventListener("click", () => this.close());
+                lightbox?.addEventListener("click", (e) => {
+                    if (e.target === lightbox) this.close();
+                });
+
+                // Navegación
+                next?.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    this.next();
+                });
+                prev?.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    this.prev();
+                });
+
+                // Teclado
+                document.addEventListener("keydown", (e) => {
+                    if (lightbox?.classList.contains("hidden")) return;
+                    if (e.key === "Escape") this.close();
+                    if (e.key === "ArrowRight") this.next();
+                    if (e.key === "ArrowLeft") this.prev();
+                });
+            },
+
+            open(index) {
+                this.currentIndex = index;
+                const lightbox = Utils.getElement("lightbox");
+                const img = Utils.getElement("lightbox-img");
+                const image = this.images[index];
+
+                if (img && image) {
+                    img.src = image.src;
+                    img.alt = image.alt;
                 }
-            });
-        }
+                lightbox?.classList.remove("hidden");
+                document.body.style.overflow = "hidden";
+            },
 
-        // Menú móvil
-        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-        const mobileMenuClose = document.getElementById("mobile-menu-close");
-        const mobileMenu = document.getElementById("mobile-menu");
-        const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
-        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            close() {
+                const lightbox = Utils.getElement("lightbox");
+                lightbox?.classList.add("hidden");
+                document.body.style.overflow = "";
+            },
 
-        function openMobileMenu() {
-            mobileMenu.classList.remove("translate-x-full");
-            mobileMenuOverlay.classList.remove("hidden");
-            document.body.style.overflow = "hidden";
-            mobileMenuBtn.setAttribute("aria-expanded", "true");
-        }
+            next() {
+                this.currentIndex = (this.currentIndex + 1) % this.images.length;
+                this.updateImage();
+            },
 
-        function closeMobileMenu() {
-            mobileMenu.classList.add("translate-x-full");
-            mobileMenuOverlay.classList.add("hidden");
-            document.body.style.overflow = "";
-            mobileMenuBtn.setAttribute("aria-expanded", "false");
-        }
+            prev() {
+                this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+                this.updateImage();
+            },
 
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener("click", openMobileMenu);
-        }
-
-        if (mobileMenuClose) {
-            mobileMenuClose.addEventListener("click", closeMobileMenu);
-        }
-
-        if (mobileMenuOverlay) {
-            mobileMenuOverlay.addEventListener("click", closeMobileMenu);
-        }
-
-        // Cerrar menú al hacer clic en un enlace
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener("click", closeMobileMenu);
-        });
-
-        // Lightbox
-        const lightbox = document.getElementById("lightbox");
-        const lightboxImg = document.getElementById("lightbox-img");
-        const lightboxClose = document.getElementById("lightbox-close");
-        const lightboxPrev = document.getElementById("lightbox-prev");
-        const lightboxNext = document.getElementById("lightbox-next");
-        const galleryImages = document.querySelectorAll('.gallery-img[data-gallery]');
-        let currentImageIndex = 0;
-
-        function openLightbox(index) {
-            currentImageIndex = index;
-            lightboxImg.src = galleryImages[index].src;
-            lightboxImg.alt = galleryImages[index].alt;
-            lightbox.classList.remove("hidden");
-            document.body.style.overflow = "hidden";
-        }
-
-        function closeLightbox() {
-            lightbox.classList.add("hidden");
-            document.body.style.overflow = "";
-        }
-
-        function showNextImage() {
-            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
-            lightboxImg.src = galleryImages[currentImageIndex].src;
-            lightboxImg.alt = galleryImages[currentImageIndex].alt;
-        }
-
-        function showPrevImage() {
-            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
-            lightboxImg.src = galleryImages[currentImageIndex].src;
-            lightboxImg.alt = galleryImages[currentImageIndex].alt;
-        }
-
-        // Abrir lightbox al hacer clic en imagen
-        galleryImages.forEach((img, index) => {
-            img.addEventListener("click", () => openLightbox(index));
-        });
-
-        // Cerrar lightbox
-        if (lightboxClose) {
-            lightboxClose.addEventListener("click", closeLightbox);
-        }
-
-        if (lightbox) {
-            lightbox.addEventListener("click", function(e) {
-                if (e.target === lightbox) {
-                    closeLightbox();
+            updateImage() {
+                const img = Utils.getElement("lightbox-img");
+                const image = this.images[this.currentIndex];
+                if (img && image) {
+                    img.src = image.src;
+                    img.alt = image.alt;
                 }
-            });
-        }
-
-        // Navegación
-        if (lightboxNext) {
-            lightboxNext.addEventListener("click", (e) => {
-                e.stopPropagation();
-                showNextImage();
-            });
-        }
-
-        if (lightboxPrev) {
-            lightboxPrev.addEventListener("click", (e) => {
-                e.stopPropagation();
-                showPrevImage();
-            });
-        }
-
-        // Cerrar con tecla ESC
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape" && !lightbox.classList.contains("hidden")) {
-                closeLightbox();
             }
-            if (e.key === "ArrowRight" && !lightbox.classList.contains("hidden")) {
-                showNextImage();
+        };
+
+        // ============================================
+        // ANIMACIONES AL SCROLL
+        // ============================================
+        const ScrollAnimations = {
+            init() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: "0px 0px -50px 0px"
+                });
+
+                Utils.getElements(".animate-on-scroll").forEach(el => {
+                    observer.observe(el);
+                });
             }
-            if (e.key === "ArrowLeft" && !lightbox.classList.contains("hidden")) {
-                showPrevImage();
-            }
+        };
+
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Año en footer
+            const yearEl = Utils.getElement("year");
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Inicializar módulos
+            LanguageManager.init();
+            FormValidator.init();
+            MobileMenu.init();
+            Lightbox.init();
+            ScrollAnimations.init();
         });
     </script>
 </body>
