@@ -3,105 +3,358 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Em breve | Residencial Cantinho da Costeira</title>
+  <title>Em Manutenção | Residencial Cantinho da Costeira</title>
 
   <link rel="icon" href="/resources/img/favicon.ico" />
 
   <style>
     :root {
-      --blue-dark: #0a2c8c;
-      --blue-main: #0d3cff;
-      --blue-light: #4aa3ff;
+      --orange-warning: #ff6b35;
+      --orange-light: #ff8c5a;
+      --orange-dark: #e55a2b;
       --white: #ffffff;
+      --gray-dark: #1a1a1a;
+      --gray-light: #f5f5f5;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, var(--blue-dark), var(--blue-main));
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+      background-size: 200% 200%;
+      animation: gradientShift 8s ease infinite;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--white);
       text-align: center;
       padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Efecto de partículas de fondo */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 140, 90, 0.1) 0%, transparent 50%);
+      pointer-events: none;
     }
 
     .card {
-      max-width: 520px;
+      max-width: 600px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 40px 28px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 32px;
+      padding: 48px 32px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cone-container {
+      margin-bottom: 32px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cone-icon {
+      width: 120px;
+      height: 120px;
+      position: relative;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+      }
+    }
+
+    .cone-icon svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 10px 30px rgba(255, 107, 53, 0.4));
     }
 
     .logo {
-      width: 120px;
+      width: 100px;
       margin-bottom: 24px;
+      opacity: 0.9;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 107, 53, 0.2);
+      border: 1px solid rgba(255, 107, 53, 0.4);
+      color: var(--orange-warning);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+      }
     }
 
     h1 {
-      font-size: 1.9rem;
-      margin-bottom: 12px;
-      letter-spacing: 0.5px;
+      font-size: 2.25rem;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     p {
-      font-size: 1rem;
-      opacity: 0.9;
-      margin-bottom: 28px;
-      line-height: 1.6;
+      font-size: 1.1rem;
+      opacity: 0.85;
+      margin-bottom: 32px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .whatsapp {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: #25d366;
+      gap: 12px;
+      background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%);
       color: #fff;
       text-decoration: none;
-      padding: 14px 22px;
+      padding: 16px 32px;
       border-radius: 999px;
       font-weight: 600;
-      font-size: 0.95rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      font-size: 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .whatsapp::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .whatsapp:hover::before {
+      width: 300px;
+      height: 300px;
     }
 
     .whatsapp:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(37, 211, 102, 0.5);
+    }
+
+    .whatsapp span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .access-form {
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .access-form h3 {
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      opacity: 0.7;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .access-input {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .access-input input {
+      flex: 1;
+      padding: 14px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--white);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .access-input input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .access-input input:focus {
+      border-color: rgba(255, 107, 53, 0.6);
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+    }
+
+    .access-btn {
+      padding: 14px 28px;
+      border: 2px solid rgba(255, 107, 53, 0.4);
+      border-radius: 999px;
+      background: rgba(255, 107, 53, 0.15);
+      color: var(--white);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .access-btn:hover {
+      background: rgba(255, 107, 53, 0.25);
+      border-color: rgba(255, 107, 53, 0.6);
       transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      font-size: 0.9rem;
+      margin-top: 12px;
+      min-height: 24px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-weight: 500;
+    }
+
+    .error-message.show {
+      opacity: 1;
     }
 
     .footer {
-      margin-top: 28px;
-      font-size: 0.8rem;
-      opacity: 0.7;
+      margin-top: 40px;
+      font-size: 0.85rem;
+      opacity: 0.6;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 32px 24px;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      .cone-icon {
+        width: 100px;
+        height: 100px;
+      }
+
+      .access-input {
+        flex-direction: column;
+      }
+
+      .access-btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <img
-      src="/resources/img/favicon-256x256.png"
-      alt="Residencial Cantinho da Costeira"
-      class="logo"
-    />
+    <div class="cone-container">
+      <div class="cone-icon">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cono de tráfico -->
+          <path d="M50 10 L85 85 L15 85 Z" fill="#FF6B35" stroke="#E55A2B" stroke-width="2"/>
+          <!-- Rayas del cono -->
+          <rect x="45" y="30" width="10" height="8" fill="#FFFFFF" rx="1"/>
+          <rect x="45" y="45" width="10" height="8" fill="#FFFFFF" rx="1"/>
+          <rect x="45" y="60" width="10" height="8" fill="#FFFFFF" rx="1"/>
+        </svg>
+      </div>
+    </div>
 
-    <h1>Estamos preparando algo especial</h1>
+    <div class="status-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 6v6l4 2"/>
+      </svg>
+      <span>Em Manutenção</span>
+    </div>
+
+    <h1>Site Temporariamente Indisponível</h1>
 
     <p>
       O site do <strong>Residencial Cantinho da Costeira</strong> está em
-      construção e em breve estará no ar.<br />
-      Enquanto isso, fale conosco pelo WhatsApp.
+      manutenção no momento.<br />
+      Estamos trabalhando para melhorar sua experiência e voltaremos em breve.
+    </p>
+
+    <p style="font-size: 0.95rem; opacity: 0.7; margin-bottom: 24px;">
+      Enquanto isso, você pode entrar em contato conosco pelo WhatsApp:
     </p>
 
     <a
@@ -110,12 +363,70 @@
       target="_blank"
       rel="noopener"
     >
-      💬 Falar no WhatsApp
+      <span>💬 Falar no WhatsApp</span>
     </a>
+
+    <div class="access-form">
+      <h3>Acceso de prueba</h3>
+      <form id="accessForm" onsubmit="handleAccess(event)">
+        <div class="access-input">
+          <input
+            type="password"
+            id="accessPassword"
+            placeholder="Contraseña de acceso"
+            autocomplete="off"
+          />
+          <button type="submit" class="access-btn">Acceder</button>
+        </div>
+        <div class="error-message" id="errorMessage"></div>
+      </form>
+    </div>
 
     <div class="footer">
       © Residencial Cantinho da Costeira
     </div>
   </div>
+
+  <script>
+    // CONTRASEÑA DE ACCESO - Cambia esto por la contraseña que quieras
+    const ACCESS_PASSWORD = 'cantinho2026';
+
+    // Verificar si ya tiene acceso guardado
+    if (sessionStorage.getItem('siteAccess') === 'granted') {
+      window.location.href = 'index.html';
+    }
+
+    function handleAccess(event) {
+      event.preventDefault();
+      const passwordInput = document.getElementById('accessPassword');
+      const errorMessage = document.getElementById('errorMessage');
+      const password = passwordInput.value.trim();
+
+      if (password === ACCESS_PASSWORD) {
+        // Guardar acceso en sessionStorage (se pierde al cerrar el navegador)
+        sessionStorage.setItem('siteAccess', 'granted');
+        // Redirigir a index.html
+        window.location.href = 'index.html';
+      } else {
+        // Mostrar error
+        errorMessage.textContent = 'Contraseña incorrecta';
+        errorMessage.classList.add('show');
+        passwordInput.value = '';
+        passwordInput.focus();
+        
+        // Ocultar error después de 3 segundos
+        setTimeout(() => {
+          errorMessage.classList.remove('show');
+        }, 3000);
+      }
+    }
+
+    // Permitir acceso con Enter
+    document.getElementById('accessPassword').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        handleAccess(e);
+      }
+    });
+  </script>
 </body>
 </html>
