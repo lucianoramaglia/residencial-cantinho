@@ -129,7 +129,8 @@
         /* Lightbox mejorado */
         #lightbox {
             display: flex;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.92) !important;
         }
 
         #lightbox.hidden {
@@ -137,7 +138,36 @@
         }
 
         #lightbox-img {
-            animation: fadeIn 0.3s ease-out;
+            animation: fadeIn 0.4s ease-out;
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease-out;
+        }
+
+        #lightbox-img:hover {
+            transform: scale(1.02);
+        }
+
+        #lightbox-close,
+        #lightbox-prev,
+        #lightbox-next {
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        #lightbox-close:hover,
+        #lightbox-prev:hover,
+        #lightbox-next:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+            transform: scale(1.1);
+        }
+
+        #lightbox-counter {
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
         /* Menú móvil mejorado */
@@ -201,6 +231,50 @@
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
         }
+
+        /* Carrusel de apartamentos */
+        .apartment-carousel {
+            position: relative;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .carousel-prev,
+        .carousel-next {
+            z-index: 10;
+        }
+
+        .carousel-dots {
+            z-index: 10;
+        }
+
+        .carousel-dot.active {
+            background-color: white !important;
+            width: 8px;
+            height: 8px;
+        }
     </style>
 </head>
 
@@ -210,7 +284,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="#inicio" class="flex items-center gap-3 group" aria-label="Ir al inicio">
-                    <img src="resources/img/logo-main-blue.png" alt="Residencial Cantinho da Costeira" 
+                    <img src="resources/img/favicon-64x64.png" alt="Residencial Cantinho da Costeira" 
                         class="h-10 w-auto transition-transform group-hover:scale-105">
                     <span class="hidden sm:inline-block">
                         <span class="text-slate-700 font-semibold text-lg">Residencial</span>
@@ -320,7 +394,7 @@
                     </div>
                     <div class="relative animate-on-scroll">
                         <div class="relative h-80 md:h-96 rounded-3xl overflow-hidden shadow-2xl bg-slate-200 group">
-                            <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                            <img src="resources/img/praia-2.jpg"
                                 alt="Residencial próximo à praia" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                             <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-lg">
@@ -344,9 +418,36 @@
                     <!-- Apartment 1 -->
                     <article class="card-hover bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col animate-on-scroll">
                         <div class="relative h-56 bg-slate-200 overflow-hidden group">
-                            <img src="https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                                alt="Apartamento até 5 pessoas" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <!-- Carrusel Verde -->
+                            <div class="apartment-carousel relative w-full h-full" data-apartment="verde">
+                                <div class="carousel-container relative w-full h-full">
+                                    <img src="resources/img/aptos/verde/aptoVerde1.jpeg" alt="Apto Zimbros - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/verde/aptoVerde2.jpeg" alt="Apto Zimbros - Foto 2" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/verde/aptoVerde3.jpeg" alt="Apto Zimbros - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/verde/aptoVerde4.jpeg" alt="Apto Zimbros - Foto 4" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/verde/aptoVerde5.jpeg" alt="Apto Zimbros - Foto 5" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                </div>
+                                <!-- Controles de navegación -->
+                                <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto anterior">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                                <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto siguiente">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                                <!-- Indicadores -->
+                                <div class="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="carousel-dot active w-2 h-2 rounded-full bg-white/80 hover:bg-white transition-all" aria-label="Ir a foto 1"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 2"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 3"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 4"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 5"></button>
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
                             <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card1.title"></h3>
@@ -363,9 +464,32 @@
                     <!-- Apartment 2 -->
                     <article class="card-hover bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col animate-on-scroll">
                         <div class="relative h-56 bg-slate-200 overflow-hidden group">
-                            <img src="https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                                alt="Apartamento com dois quartos" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <!-- Carrusel Rojo -->
+                            <div class="apartment-carousel relative w-full h-full" data-apartment="rojo">
+                                <div class="carousel-container relative w-full h-full">
+                                    <img src="resources/img/aptos/rojo/aptoRojo1.jpeg" alt="Apto Praia Vermelha - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/rojo/aptoRojo2.jpeg" alt="Apto Praia Vermelha - Foto 2" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/rojo/aptoRojo3.jpeg" alt="Apto Praia Vermelha - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                </div>
+                                <!-- Controles de navegación -->
+                                <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto anterior">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                                <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto siguiente">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                                <!-- Indicadores -->
+                                <div class="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="carousel-dot active w-2 h-2 rounded-full bg-white/80 hover:bg-white transition-all" aria-label="Ir a foto 1"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 2"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 3"></button>
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
                             <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card2.title"></h3>
@@ -382,9 +506,36 @@
                     <!-- Apartment 3 -->
                     <article class="card-hover bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col animate-on-scroll">
                         <div class="relative h-56 bg-slate-200 overflow-hidden group">
-                            <img src="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                                alt="Apartamento tipo loft" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <!-- Carrusel Amarillo -->
+                            <div class="apartment-carousel relative w-full h-full" data-apartment="amarillo">
+                                <div class="carousel-container relative w-full h-full">
+                                    <img src="resources/img/aptos/amarillo/aptoAmarillo1.jpeg" alt="Apto Praia Cardoso - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/amarillo/aptoAmarillo2.jpeg" alt="Apto Praia Cardoso - Foto 2" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/amarillo/aptoAmarillo3.jpeg" alt="Apto Praia Cardoso - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/amarillo/aptoAmarillo4.jpeg" alt="Apto Praia Cardoso - Foto 4" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/amarillo/aptoAmarillo5.jpeg" alt="Apto Praia Cardoso - Foto 5" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                </div>
+                                <!-- Controles de navegación -->
+                                <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto anterior">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                                <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto siguiente">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                                <!-- Indicadores -->
+                                <div class="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="carousel-dot active w-2 h-2 rounded-full bg-white/80 hover:bg-white transition-all" aria-label="Ir a foto 1"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 2"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 3"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 4"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 5"></button>
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
                             <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card3.title"></h3>
@@ -449,23 +600,32 @@
                 </div>
                 <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
-                        src="https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Foto 1" loading="lazy" data-gallery>
+                        src="resources/img/aptos/exterior/areaExterior1.jpeg"
+                        alt="Área exterior 1" loading="lazy" data-gallery>
                     <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
-                        src="https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Foto 2" loading="lazy" data-gallery>
+                        src="resources/img/aptos/exterior/areaExterior2.jpeg"
+                        alt="Área exterior 2" loading="lazy" data-gallery>
                     <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
-                        src="https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Foto 3" loading="lazy" data-gallery>
+                        src="resources/img/aptos/exterior/areaExterior3.jpeg"
+                        alt="Área exterior 3" loading="lazy" data-gallery>
                     <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
-                        src="https://images.pexels.com/photos/279719/pexels-photo-279719.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Foto 4" loading="lazy" data-gallery>
+                        src="resources/img/aptos/exterior/areaExterior4.jpeg"
+                        alt="Área exterior 4" loading="lazy" data-gallery>
                     <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
-                        src="https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Foto 5" loading="lazy" data-gallery>
+                        src="resources/img/aptos/exterior/areaExterior5.jpeg"
+                        alt="Área exterior 5" loading="lazy" data-gallery>
                     <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
-                        src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Foto 6" loading="lazy" data-gallery>
+                        src="resources/img/fachada-1.jpg"
+                        alt="Fachada 1" loading="lazy" data-gallery>
+                    <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
+                        src="resources/img/fachada-2.jpg"
+                        alt="Fachada 2" loading="lazy" data-gallery>
+                    <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
+                        src="resources/img/praia-1.jpg"
+                        alt="Praia 1" loading="lazy" data-gallery>
+                    <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
+                        src="resources/img/praia-2.jpg"
+                        alt="Praia 2" loading="lazy" data-gallery>
                 </div>
             </div>
         </section>
@@ -578,6 +738,79 @@
                                 <p class="text-red-600 text-xs mt-1 hidden" id="check-out-error"></p>
                             </div>
                         </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-2 font-semibold text-slate-700" data-i18n="form.guestsLabel"></label>
+                                <div class="relative">
+                                    <button type="button" id="guests-selector" 
+                                        class="w-full rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all text-left flex items-center justify-between bg-white hover:border-teal-400">
+                                        <div class="flex items-center gap-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                            </svg>
+                                            <span id="guests-display" class="text-slate-700">Seleccione</span>
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-500 transition-transform" id="guests-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+                                    <div id="guests-dropdown" class="hidden absolute z-10 w-full mt-2 bg-white border-2 border-slate-300 rounded-xl shadow-lg overflow-hidden">
+                                        <div class="p-4 space-y-4">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-3">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                    </svg>
+                                                    <span class="text-sm font-medium text-slate-700" data-i18n="form.adultsLabel"></span>
+                                                </div>
+                                                <div class="flex items-center gap-3">
+                                                    <button type="button" id="adults-decrease" class="w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center text-slate-600 hover:border-teal-600 hover:text-teal-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                                                        </svg>
+                                                    </button>
+                                                    <span id="adults-count" class="w-8 text-center font-medium text-slate-900">0</span>
+                                                    <button type="button" id="adults-increase" class="w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center text-slate-600 hover:border-teal-600 hover:text-teal-600 transition-all">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-3">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                    </svg>
+                                                    <span class="text-sm font-medium text-slate-700" data-i18n="form.childrenLabel"></span>
+                                                </div>
+                                                <div class="flex items-center gap-3">
+                                                    <button type="button" id="children-decrease" class="w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center text-slate-600 hover:border-teal-600 hover:text-teal-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                                                        </svg>
+                                                    </button>
+                                                    <span id="children-count" class="w-8 text-center font-medium text-slate-900">0</span>
+                                                    <button type="button" id="children-increase" class="w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center text-slate-600 hover:border-teal-600 hover:text-teal-600 transition-all">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="adults" id="form-adults" value="0">
+                                    <input type="hidden" name="children" id="form-children" value="0">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="form-phone" class="block mb-2 font-semibold text-slate-700" data-i18n="form.phoneLabel"></label>
+                                <input type="tel" name="phone" id="form-phone"
+                                    class="w-full rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all"
+                                    placeholder="" data-i18n-placeholder="form.phonePlaceholder" />
+                            </div>
+                        </div>
                         <div>
                             <label for="form-message" class="block mb-2 font-semibold text-slate-700" data-i18n="form.messageLabel"></label>
                             <textarea name="message" id="form-message" rows="4"
@@ -650,6 +883,9 @@
             </svg>
         </button>
         <img id="lightbox-img" src="" alt="" class="max-w-[90%] max-h-[90%] object-contain rounded-lg shadow-2xl">
+        <div id="lightbox-counter" class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium hidden">
+            <span id="lightbox-current">1</span> / <span id="lightbox-total">1</span>
+        </div>
     </div>
 
     <script>
@@ -684,15 +920,15 @@
                 "hero.badge": "A 100m da praia de Zimbros",
                 "apartments.title": "Apartamentos equipados",
                 "apartments.subtitle": "Opções confortáveis para famílias e grupos de até 5 pessoas.",
-                "apartments.card1.title": "Apartamento térreo – até 5 pessoas",
+                "apartments.card1.title": "Apto. Zimbros",
                 "apartments.card1.desc": "Sala e cozinha integradas, 1 dormitório, banheiro, ar-condicionado e área externa.",
                 "apartments.card1.capacity": "Capacidade: até 5 hóspedes.",
                 "apartments.card1.price": "Consulte valores por temporada",
-                "apartments.card2.title": "Apartamento com 2 dormitórios",
+                "apartments.card2.title": "Apto. Praia Vermelha",
                 "apartments.card2.desc": "Dois quartos, banheiro, cozinha completa e varanda, ideal para famílias.",
                 "apartments.card2.capacity": "Capacidade: até 5 hóspedes.",
                 "apartments.card2.price": "Consulte valores por temporada",
-                "apartments.card3.title": "Apartamento tipo loft",
+                "apartments.card3.title": "Apto. Praia Cardoso",
                 "apartments.card3.desc": "Ambiente amplo, bem ventilado, com cozinha equipada e área de convivência.",
                 "apartments.card3.capacity": "Capacidade: até 5 hóspedes.",
                 "apartments.card3.price": "Consulte valores por temporada",
@@ -719,8 +955,13 @@
                 "form.namePlaceholder": "Seu nome",
                 "form.emailLabel": "E-mail",
                 "form.emailPlaceholder": "seu@email.com",
+                "form.phoneLabel": "Telefone (opcional)",
+                "form.phonePlaceholder": "Seu telefone",
                 "form.checkInLabel": "Data de chegada",
                 "form.checkOutLabel": "Data de saída",
+                "form.guestsLabel": "Hóspedes",
+                "form.adultsLabel": "Adultos",
+                "form.childrenLabel": "Crianças",
                 "form.messageLabel": "Mensagem",
                 "form.messagePlaceholder": "Quantidade de pessoas, dúvidas, horários aproximados, etc.",
                 "form.note": "* Formulário demonstrativo. Podemos conectá-lo a um serviço de e-mail ou sistema de reservas depois.",
@@ -743,15 +984,15 @@
                 "hero.badge": "A 100m de la playa de Zimbros",
                 "apartments.title": "Departamentos equipados",
                 "apartments.subtitle": "Opciones cómodas para familias y grupos de hasta 5 personas.",
-                "apartments.card1.title": "Departamento planta baja – hasta 5 personas",
+                "apartments.card1.title": "Depto. Zimbros",
                 "apartments.card1.desc": "Living y cocina integrados, 1 dormitorio, baño, aire acondicionado y área exterior.",
                 "apartments.card1.capacity": "Capacidad: hasta 5 huéspedes.",
                 "apartments.card1.price": "Consultar tarifas por temporada",
-                "apartments.card2.title": "Departamento con 2 dormitorios",
+                "apartments.card2.title": "Depto. Praia Vermelha",
                 "apartments.card2.desc": "Dos habitaciones, baño, cocina completa y balcón, ideal para familias.",
                 "apartments.card2.capacity": "Capacidad: hasta 5 huéspedes.",
                 "apartments.card2.price": "Consultar tarifas por temporada",
-                "apartments.card3.title": "Departamento tipo loft",
+                "apartments.card3.title": "Depto. Praia Cardoso",
                 "apartments.card3.desc": "Ambiente amplio y luminoso, con cocina equipada y área de estar.",
                 "apartments.card3.capacity": "Capacidad: hasta 5 huéspedes.",
                 "apartments.card3.price": "Consultar tarifas por temporada",
@@ -778,8 +1019,13 @@
                 "form.namePlaceholder": "Tu nombre",
                 "form.emailLabel": "Email",
                 "form.emailPlaceholder": "tu@email.com",
+                "form.phoneLabel": "Teléfono (opcional)",
+                "form.phonePlaceholder": "Tu teléfono",
                 "form.checkInLabel": "Fecha de llegada",
                 "form.checkOutLabel": "Fecha de salida",
+                "form.guestsLabel": "Huéspedes",
+                "form.adultsLabel": "Adultos",
+                "form.childrenLabel": "Niños",
                 "form.messageLabel": "Mensaje",
                 "form.messagePlaceholder": "Cantidad de personas, dudas, horarios aproximados, etc.",
                 "form.note": "* Formulario de demostración. Después podemos conectarlo a un servicio de email o sistema de reservas.",
@@ -837,6 +1083,11 @@
                 // Actualizar formulario
                 const langInput = Utils.getElement("form-lang");
                 if (langInput) langInput.value = lang;
+
+                // Actualizar selector de huéspedes si existe
+                if (GuestsSelector !== undefined && GuestsSelector.updateDisplay) {
+                    GuestsSelector.updateDisplay();
+                }
 
                 // Guardar preferencia
                 localStorage.setItem(CONFIG.storageKey, lang);
@@ -1056,22 +1307,43 @@
             },
 
             open(index) {
+                // Cerrar lightbox de apartamentos si está abierto
+                if (ApartmentLightbox.isOpen) {
+                    ApartmentLightbox.close();
+                }
+                
                 this.currentIndex = index;
                 const lightbox = Utils.getElement("lightbox");
                 const img = Utils.getElement("lightbox-img");
+                const counter = Utils.getElement("lightbox-counter");
+                const currentEl = Utils.getElement("lightbox-current");
+                const totalEl = Utils.getElement("lightbox-total");
                 const image = this.images[index];
 
                 if (img && image) {
                     img.src = image.src;
                     img.alt = image.alt;
                 }
+                
+                // Mostrar contador si hay múltiples imágenes
+                if (counter && currentEl && totalEl && this.images.length > 1) {
+                    currentEl.textContent = index + 1;
+                    totalEl.textContent = this.images.length;
+                    counter.classList.remove("hidden");
+                } else if (counter) {
+                    counter.classList.add("hidden");
+                }
+                
                 lightbox?.classList.remove("hidden");
                 document.body.style.overflow = "hidden";
             },
 
             close() {
                 const lightbox = Utils.getElement("lightbox");
+                const counter = Utils.getElement("lightbox-counter");
+                
                 lightbox?.classList.add("hidden");
+                if (counter) counter.classList.add("hidden");
                 document.body.style.overflow = "";
             },
 
@@ -1087,11 +1359,485 @@
 
             updateImage() {
                 const img = Utils.getElement("lightbox-img");
+                const currentEl = Utils.getElement("lightbox-current");
                 const image = this.images[this.currentIndex];
+                
                 if (img && image) {
                     img.src = image.src;
                     img.alt = image.alt;
                 }
+                
+                // Actualizar contador
+                if (currentEl && this.images.length > 0) {
+                    currentEl.textContent = this.currentIndex + 1;
+                }
+            }
+        };
+
+        // ============================================
+        // CARRUSEL DE APARTAMENTOS
+        // ============================================
+        const ApartmentCarousel = {
+            carousels: [],
+
+            init() {
+                const carouselElements = Utils.getElements('.apartment-carousel');
+                carouselElements.forEach(carousel => {
+                    this.initCarousel(carousel);
+                });
+            },
+
+            initCarousel(carousel) {
+                const slides = carousel.querySelectorAll('.carousel-slide');
+                const prevBtn = carousel.querySelector('.carousel-prev');
+                const nextBtn = carousel.querySelector('.carousel-next');
+                const dots = carousel.querySelectorAll('.carousel-dot');
+                let currentIndex = 0;
+
+                const showSlide = (index) => {
+                    slides.forEach((slide, i) => {
+                        if (i === index) {
+                            slide.classList.add('active');
+                        } else {
+                            slide.classList.remove('active');
+                        }
+                    });
+
+                    dots.forEach((dot, i) => {
+                        if (i === index) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+
+                    currentIndex = index;
+                };
+
+                const nextSlide = () => {
+                    const nextIndex = (currentIndex + 1) % slides.length;
+                    showSlide(nextIndex);
+                };
+
+                const prevSlide = () => {
+                    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+                    showSlide(prevIndex);
+                };
+
+                const goToSlide = (index) => {
+                    showSlide(index);
+                };
+
+                // Event listeners
+                nextBtn?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                });
+
+                prevBtn?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    prevSlide();
+                });
+
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        goToSlide(index);
+                    });
+                });
+
+                // Hacer las imágenes clickeables para abrir lightbox
+                slides.forEach((slide, index) => {
+                    slide.style.cursor = 'pointer';
+                    slide.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        // Obtener todas las imágenes del departamento
+                        const apartmentImages = Array.from(slides).map(s => ({
+                            src: s.src,
+                            alt: s.alt
+                        }));
+                        // Abrir lightbox con las imágenes del departamento
+                        ApartmentLightbox.open(apartmentImages, index);
+                    });
+                });
+
+                // Auto-play opcional (pausa al hover)
+                let autoPlayInterval;
+                const startAutoPlay = () => {
+                    autoPlayInterval = setInterval(nextSlide, 4000);
+                };
+
+                const stopAutoPlay = () => {
+                    if (autoPlayInterval) {
+                        clearInterval(autoPlayInterval);
+                    }
+                };
+
+                // Iniciar auto-play
+                startAutoPlay();
+
+                // Pausar al hover
+                const card = carousel.closest('.card-hover');
+                if (card) {
+                    card.addEventListener('mouseenter', stopAutoPlay);
+                    card.addEventListener('mouseleave', startAutoPlay);
+                }
+            }
+        };
+
+        // ============================================
+        // LIGHTBOX PARA APARTAMENTOS
+        // ============================================
+        const ApartmentLightbox = {
+            currentIndex: 0,
+            images: [],
+            isOpen: false,
+
+            open(images, startIndex = 0) {
+                // Cerrar lightbox de galería si está abierto
+                const lightbox = Utils.getElement("lightbox");
+                if (lightbox && !lightbox.classList.contains("hidden")) {
+                    Lightbox.close();
+                }
+                
+                this.images = images;
+                this.currentIndex = startIndex;
+                this.isOpen = true;
+                
+                const img = Utils.getElement("lightbox-img");
+                const counter = Utils.getElement("lightbox-counter");
+                const currentEl = Utils.getElement("lightbox-current");
+                const totalEl = Utils.getElement("lightbox-total");
+                
+                if (img && images.length > 0) {
+                    img.src = images[startIndex].src;
+                    img.alt = images[startIndex].alt;
+                }
+                
+                // Mostrar contador
+                if (counter && currentEl && totalEl && images.length > 1) {
+                    currentEl.textContent = startIndex + 1;
+                    totalEl.textContent = images.length;
+                    counter.classList.remove("hidden");
+                } else if (counter) {
+                    counter.classList.add("hidden");
+                }
+                
+                lightbox?.classList.remove("hidden");
+                document.body.style.overflow = "hidden";
+            },
+
+            close() {
+                const lightbox = Utils.getElement("lightbox");
+                const counter = Utils.getElement("lightbox-counter");
+                
+                lightbox?.classList.add("hidden");
+                if (counter) counter.classList.add("hidden");
+                document.body.style.overflow = "";
+                this.isOpen = false;
+                this.images = [];
+            },
+
+            next() {
+                if (this.images.length === 0) return;
+                this.currentIndex = (this.currentIndex + 1) % this.images.length;
+                this.updateImage();
+            },
+
+            prev() {
+                if (this.images.length === 0) return;
+                this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+                this.updateImage();
+            },
+
+            updateImage() {
+                const img = Utils.getElement("lightbox-img");
+                const currentEl = Utils.getElement("lightbox-current");
+                
+                if (img && this.images[this.currentIndex]) {
+                    img.src = this.images[this.currentIndex].src;
+                    img.alt = this.images[this.currentIndex].alt;
+                }
+                
+                // Actualizar contador
+                if (currentEl && this.images.length > 0) {
+                    currentEl.textContent = this.currentIndex + 1;
+                }
+            },
+
+            init() {
+                const lightbox = Utils.getElement("lightbox");
+                const close = Utils.getElement("lightbox-close");
+                const prev = Utils.getElement("lightbox-prev");
+                const next = Utils.getElement("lightbox-next");
+
+                // Cerrar lightbox
+                close?.addEventListener("click", () => this.close());
+                lightbox?.addEventListener("click", (e) => {
+                    if (e.target === lightbox) this.close();
+                });
+
+                // Navegación - solo para apartamentos
+                const handleNext = (e) => {
+                    e.stopPropagation();
+                    if (this.isOpen && this.images.length > 0) {
+                        this.next();
+                    }
+                };
+                
+                const handlePrev = (e) => {
+                    e.stopPropagation();
+                    if (this.isOpen && this.images.length > 0) {
+                        this.prev();
+                    }
+                };
+
+                // Agregar listeners que funcionen con ambos sistemas
+                next?.addEventListener("click", handleNext);
+                prev?.addEventListener("click", handlePrev);
+
+                // Teclado
+                const handleKeydown = (e) => {
+                    if (!lightbox || lightbox.classList.contains("hidden")) return;
+                    
+                    if (e.key === "Escape") {
+                        if (this.isOpen) {
+                            this.close();
+                        } else {
+                            Lightbox.close();
+                        }
+                        return;
+                    }
+                    
+                    if (this.isOpen && this.images.length > 0) {
+                        if (e.key === "ArrowRight") {
+                            e.preventDefault();
+                            this.next();
+                        }
+                        if (e.key === "ArrowLeft") {
+                            e.preventDefault();
+                            this.prev();
+                        }
+                    }
+                };
+
+                // Remover listener anterior si existe y agregar el nuevo
+                document.removeEventListener("keydown", handleKeydown);
+                document.addEventListener("keydown", handleKeydown);
+            }
+        };
+
+        // ============================================
+        // SELECTOR DE HUÉSPEDES
+        // ============================================
+        const GuestsSelector = {
+            adults: 0,
+            children: 0,
+            isOpen: false,
+
+            init() {
+                const selector = Utils.getElement("guests-selector");
+                const dropdown = Utils.getElement("guests-dropdown");
+                const chevron = Utils.getElement("guests-chevron");
+                const adultsIncrease = Utils.getElement("adults-increase");
+                const adultsDecrease = Utils.getElement("adults-decrease");
+                const childrenIncrease = Utils.getElement("children-increase");
+                const childrenDecrease = Utils.getElement("children-decrease");
+
+                // Abrir/cerrar dropdown
+                selector?.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    this.toggle();
+                });
+
+                // Cerrar al hacer clic fuera
+                document.addEventListener("click", (e) => {
+                    if (this.isOpen && dropdown && !dropdown.contains(e.target) && !selector?.contains(e.target)) {
+                        this.close();
+                    }
+                });
+
+                // Controles de adultos
+                adultsIncrease?.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    this.setAdults(this.adults + 1);
+                });
+
+                adultsDecrease?.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    if (this.adults > 0) {
+                        this.setAdults(this.adults - 1);
+                    }
+                });
+
+                // Controles de niños
+                childrenIncrease?.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    this.setChildren(this.children + 1);
+                });
+
+                childrenDecrease?.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    if (this.children > 0) {
+                        this.setChildren(this.children - 1);
+                    }
+                });
+
+                // Inicializar display y botones
+                this.updateDisplay();
+                this.updateButtons();
+            },
+
+            toggle() {
+                if (this.isOpen) {
+                    this.close();
+                } else {
+                    this.open();
+                }
+            },
+
+            open() {
+                const dropdown = Utils.getElement("guests-dropdown");
+                const chevron = Utils.getElement("guests-chevron");
+                const selector = Utils.getElement("guests-selector");
+                
+                if (dropdown) {
+                    dropdown.classList.remove("hidden");
+                    this.isOpen = true;
+                }
+                if (chevron) {
+                    chevron.style.transform = "rotate(180deg)";
+                }
+                if (selector) {
+                    selector.classList.add("border-teal-600");
+                }
+            },
+
+            close() {
+                const dropdown = Utils.getElement("guests-dropdown");
+                const chevron = Utils.getElement("guests-chevron");
+                const selector = Utils.getElement("guests-selector");
+                
+                if (dropdown) {
+                    dropdown.classList.add("hidden");
+                    this.isOpen = false;
+                }
+                if (chevron) {
+                    chevron.style.transform = "rotate(0deg)";
+                }
+                if (selector) {
+                    selector.classList.remove("border-teal-600");
+                }
+            },
+
+            setAdults(count) {
+                this.adults = Math.max(0, count);
+                this.updateDisplay();
+                this.updateButtons();
+                const input = Utils.getElement("form-adults");
+                if (input) input.value = this.adults;
+            },
+
+            setChildren(count) {
+                this.children = Math.max(0, count);
+                this.updateDisplay();
+                this.updateButtons();
+                const input = Utils.getElement("form-children");
+                if (input) input.value = this.children;
+            },
+
+            updateDisplay() {
+                const display = Utils.getElement("guests-display");
+                const lang = Utils.getCurrentLang();
+                
+                if (display) {
+                    if (this.adults === 0 && this.children === 0) {
+                        if (lang === "pt") {
+                            display.textContent = "Selecione";
+                        } else {
+                            display.textContent = "Seleccione";
+                        }
+                    } else if (lang === "pt") {
+                        const adultsText = this.adults === 1 ? "adulto" : "adultos";
+                        const childrenText = this.children === 1 ? "criança" : "crianças";
+                        if (this.children === 0) {
+                            display.textContent = `${this.adults} ${adultsText}`;
+                        } else {
+                            display.textContent = `${this.adults} ${adultsText} · ${this.children} ${childrenText}`;
+                        }
+                    } else {
+                        const adultsText = this.adults === 1 ? "adulto" : "adultos";
+                        const childrenText = this.children === 1 ? "niño" : "niños";
+                        if (this.children === 0) {
+                            display.textContent = `${this.adults} ${adultsText}`;
+                        } else {
+                            display.textContent = `${this.adults} ${adultsText} · ${this.children} ${childrenText}`;
+                        }
+                    }
+                }
+            },
+
+            updateButtons() {
+                const adultsDecrease = Utils.getElement("adults-decrease");
+                const adultsIncrease = Utils.getElement("adults-increase");
+                const childrenDecrease = Utils.getElement("children-decrease");
+                const childrenIncrease = Utils.getElement("children-increase");
+                
+                // Actualizar estado de botones de adultos
+                if (adultsDecrease) {
+                    if (this.adults <= 0) {
+                        adultsDecrease.disabled = true;
+                        adultsDecrease.classList.add("opacity-50", "cursor-not-allowed");
+                        adultsDecrease.classList.remove("border-teal-600", "text-teal-600");
+                        adultsDecrease.classList.add("border-slate-300", "text-slate-400");
+                    } else {
+                        adultsDecrease.disabled = false;
+                        adultsDecrease.classList.remove("opacity-50", "cursor-not-allowed");
+                        adultsDecrease.classList.add("border-teal-600", "text-teal-600");
+                        adultsDecrease.classList.remove("border-slate-300", "text-slate-400");
+                    }
+                }
+                
+                if (adultsIncrease) {
+                    if (this.adults > 0) {
+                        adultsIncrease.classList.add("border-teal-600", "text-teal-600", "hover:bg-teal-50");
+                        adultsIncrease.classList.remove("border-slate-300", "text-slate-600", "hover:border-teal-600", "hover:text-teal-600");
+                    } else {
+                        adultsIncrease.classList.add("border-slate-300", "text-slate-600", "hover:border-teal-600", "hover:text-teal-600");
+                        adultsIncrease.classList.remove("border-teal-600", "text-teal-600", "hover:bg-teal-50");
+                    }
+                }
+                
+                // Actualizar estado de botones de niños
+                if (childrenDecrease) {
+                    if (this.children <= 0) {
+                        childrenDecrease.disabled = true;
+                        childrenDecrease.classList.add("opacity-50", "cursor-not-allowed");
+                        childrenDecrease.classList.remove("border-teal-600", "text-teal-600");
+                        childrenDecrease.classList.add("border-slate-300", "text-slate-400");
+                    } else {
+                        childrenDecrease.disabled = false;
+                        childrenDecrease.classList.remove("opacity-50", "cursor-not-allowed");
+                        childrenDecrease.classList.add("border-teal-600", "text-teal-600");
+                        childrenDecrease.classList.remove("border-slate-300", "text-slate-400");
+                    }
+                }
+                
+                if (childrenIncrease) {
+                    if (this.children > 0) {
+                        childrenIncrease.classList.add("border-teal-600", "text-teal-600", "hover:bg-teal-50");
+                        childrenIncrease.classList.remove("border-slate-300", "text-slate-600", "hover:border-teal-600", "hover:text-teal-600");
+                    } else {
+                        childrenIncrease.classList.add("border-slate-300", "text-slate-600", "hover:border-teal-600", "hover:text-teal-600");
+                        childrenIncrease.classList.remove("border-teal-600", "text-teal-600", "hover:bg-teal-50");
+                    }
+                }
+                
+                // Actualizar contadores
+                const adultsCount = Utils.getElement("adults-count");
+                const childrenCount = Utils.getElement("children-count");
+                if (adultsCount) adultsCount.textContent = this.adults;
+                if (childrenCount) childrenCount.textContent = this.children;
             }
         };
 
@@ -1130,6 +1876,9 @@
             FormValidator.init();
             MobileMenu.init();
             Lightbox.init();
+            ApartmentLightbox.init();
+            ApartmentCarousel.init();
+            GuestsSelector.init();
             ScrollAnimations.init();
         });
     </script>
