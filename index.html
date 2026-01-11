@@ -275,6 +275,19 @@
             width: 8px;
             height: 8px;
         }
+
+        /* Estilos para selector de código de país */
+        #form-phone-code {
+            padding-right: 1.75rem;
+        }
+
+        #form-phone-code option {
+            padding: 0.5rem;
+        }
+
+        #form-phone-code:focus {
+            border-color: rgb(13 148 136);
+        }
     </style>
 </head>
 
@@ -418,10 +431,10 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 animate-on-scroll">
                     <h2 class="text-3xl md:text-4xl font-bold mb-3 text-slate-900" data-i18n="apartments.title"></h2>
-                    <p class="text-lg text-slate-600 max-w-2xl mx-auto" data-i18n="apartments.subtitle"></p>
+                    <div class="text-lg text-slate-600 max-w-2xl mx-auto space-y-2" data-i18n-html="apartments.subtitle"></div>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8">
+                <div class="grid md:grid-cols-2 gap-8">
                     <!-- Apartment 1 -->
                     <article class="card-hover bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col animate-on-scroll">
                         <div class="relative h-56 bg-slate-200 overflow-hidden group">
@@ -433,6 +446,55 @@
                                     <img src="resources/img/aptos/verde/aptoVerde3.jpeg" alt="Apto Zimbros - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/verde/aptoVerde4.jpeg" alt="Apto Zimbros - Foto 4" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/verde/aptoVerde5.jpeg" alt="Apto Zimbros - Foto 5" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/banio.jpeg" alt="Apto Zimbros - Baño" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/pieza.jpeg" alt="Apto Zimbros - Pieza" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                </div>
+                                <!-- Controles de navegación -->
+                                <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto anterior">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                                <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto siguiente">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                                <!-- Indicadores -->
+                                <div class="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="carousel-dot active w-2 h-2 rounded-full bg-white/80 hover:bg-white transition-all" aria-label="Ir a foto 1"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 2"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 3"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 4"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 5"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 6"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 7"></button>
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card1.title"></h3>
+                            <ul class="text-sm text-slate-600 mb-3 leading-relaxed space-y-1 list-disc list-inside" data-i18n-list="apartments.card1.desc"></ul>
+                            <p class="text-xs text-slate-500 mb-4 font-medium" data-i18n="apartments.card1.capacity"></p>
+                            <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-end">
+                                <a href="#contact" class="text-teal-600 hover:text-teal-700 font-semibold text-sm underline underline-offset-4 transition-colors"
+                                    data-i18n="apartments.card.contact"></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Apartment 2 -->
+                    <article class="card-hover bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col animate-on-scroll">
+                        <div class="relative h-56 bg-slate-200 overflow-hidden group">
+                            <!-- Carrusel Rojo -->
+                            <div class="apartment-carousel relative w-full h-full" data-apartment="rojo">
+                                <div class="carousel-container relative w-full h-full">
+                                    <img src="resources/img/aptos/rojo/aptoRojo1.jpeg" alt="Apto Praia Vermelha - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/rojo/aptoRojo2.jpeg" alt="Apto Praia Vermelha - Foto 2" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/rojo/aptoRojo3.jpeg" alt="Apto Praia Vermelha - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/banio.jpeg" alt="Apto Praia Vermelha - Baño" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/pieza.jpeg" alt="Apto Praia Vermelha - Pieza" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                 </div>
                                 <!-- Controles de navegación -->
                                 <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto anterior">
@@ -457,53 +519,10 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
-                            <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card1.title"></h3>
-                            <p class="text-sm text-slate-600 mb-3 leading-relaxed" data-i18n="apartments.card1.desc"></p>
-                            <p class="text-xs text-slate-500 mb-4 font-medium" data-i18n="apartments.card1.capacity"></p>
-                            <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-                                <span class="font-bold text-teal-600 text-sm" data-i18n="apartments.card1.price"></span>
-                                <a href="#contact" class="text-teal-600 hover:text-teal-700 font-semibold text-sm underline underline-offset-4 transition-colors"
-                                    data-i18n="apartments.card.contact"></a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Apartment 2 -->
-                    <article class="card-hover bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col animate-on-scroll">
-                        <div class="relative h-56 bg-slate-200 overflow-hidden group">
-                            <!-- Carrusel Rojo -->
-                            <div class="apartment-carousel relative w-full h-full" data-apartment="rojo">
-                                <div class="carousel-container relative w-full h-full">
-                                    <img src="resources/img/aptos/rojo/aptoRojo1.jpeg" alt="Apto Praia Vermelha - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="lazy">
-                                    <img src="resources/img/aptos/rojo/aptoRojo2.jpeg" alt="Apto Praia Vermelha - Foto 2" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
-                                    <img src="resources/img/aptos/rojo/aptoRojo3.jpeg" alt="Apto Praia Vermelha - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
-                                </div>
-                                <!-- Controles de navegación -->
-                                <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto anterior">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                                    </svg>
-                                </button>
-                                <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto siguiente">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </button>
-                                <!-- Indicadores -->
-                                <div class="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button class="carousel-dot active w-2 h-2 rounded-full bg-white/80 hover:bg-white transition-all" aria-label="Ir a foto 1"></button>
-                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 2"></button>
-                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 3"></button>
-                                </div>
-                            </div>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                        </div>
-                        <div class="p-6 flex-1 flex flex-col">
                             <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card2.title"></h3>
-                            <p class="text-sm text-slate-600 mb-3 leading-relaxed" data-i18n="apartments.card2.desc"></p>
+                            <ul class="text-sm text-slate-600 mb-3 leading-relaxed space-y-1 list-disc list-inside" data-i18n-list="apartments.card2.desc"></ul>
                             <p class="text-xs text-slate-500 mb-4 font-medium" data-i18n="apartments.card2.capacity"></p>
-                            <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-                                <span class="font-bold text-teal-600 text-sm" data-i18n="apartments.card2.price"></span>
+                            <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-end">
                                 <a href="#contact" class="text-teal-600 hover:text-teal-700 font-semibold text-sm underline underline-offset-4 transition-colors"
                                     data-i18n="apartments.card.contact"></a>
                             </div>
@@ -521,6 +540,8 @@
                                     <img src="resources/img/aptos/amarillo/aptoAmarillo3.jpeg" alt="Apto Praia Cardoso - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/amarillo/aptoAmarillo4.jpeg" alt="Apto Praia Cardoso - Foto 4" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/amarillo/aptoAmarillo5.jpeg" alt="Apto Praia Cardoso - Foto 5" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/banio.jpeg" alt="Apto Praia Cardoso - Baño" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/pieza.jpeg" alt="Apto Praia Cardoso - Pieza" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                 </div>
                                 <!-- Controles de navegación -->
                                 <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto anterior">
@@ -540,16 +561,56 @@
                                     <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 3"></button>
                                     <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 4"></button>
                                     <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 5"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 6"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 7"></button>
                                 </div>
                             </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
                             <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card3.title"></h3>
-                            <p class="text-sm text-slate-600 mb-3 leading-relaxed" data-i18n="apartments.card3.desc"></p>
+                            <ul class="text-sm text-slate-600 mb-3 leading-relaxed space-y-1 list-disc list-inside" data-i18n-list="apartments.card3.desc"></ul>
                             <p class="text-xs text-slate-500 mb-4 font-medium" data-i18n="apartments.card3.capacity"></p>
-                            <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-                                <span class="font-bold text-teal-600 text-sm" data-i18n="apartments.card3.price"></span>
+                            <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-end">
+                                <a href="#contact" class="text-teal-600 hover:text-teal-700 font-semibold text-sm underline underline-offset-4 transition-colors"
+                                    data-i18n="apartments.card.contact"></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Apartment 4 -->
+                    <article class="card-hover bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col animate-on-scroll">
+                        <div class="relative h-56 bg-slate-200 overflow-hidden group">
+                            <!-- Carrusel Marron -->
+                            <div class="apartment-carousel relative w-full h-full" data-apartment="marron">
+                                <div class="carousel-container relative w-full h-full">
+                                    <img src="resources/img/aptos/banio.jpeg" alt="Apto Marrom - Baño" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/pieza.jpeg" alt="Apto Marrom - Pieza" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                </div>
+                                <!-- Controles de navegación -->
+                                <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto anterior">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                                <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-700 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" aria-label="Foto siguiente">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                                <!-- Indicadores -->
+                                <div class="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="carousel-dot active w-2 h-2 rounded-full bg-white/80 hover:bg-white transition-all" aria-label="Ir a foto 1"></button>
+                                    <button class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" aria-label="Ir a foto 2"></button>
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="font-bold text-lg mb-2 text-slate-900" data-i18n="apartments.card4.title"></h3>
+                            <ul class="text-sm text-slate-600 mb-3 leading-relaxed space-y-1 list-disc list-inside" data-i18n-list="apartments.card4.desc"></ul>
+                            <p class="text-xs text-slate-500 mb-4 font-medium" data-i18n="apartments.card4.capacity"></p>
+                            <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-end">
                                 <a href="#contact" class="text-teal-600 hover:text-teal-700 font-semibold text-sm underline underline-offset-4 transition-colors"
                                     data-i18n="apartments.card.contact"></a>
                             </div>
@@ -565,7 +626,7 @@
                 <div class="text-center mb-12 animate-on-scroll">
                     <h2 class="text-3xl md:text-4xl font-bold mb-3 text-slate-900" data-i18n="services.title"></h2>
                 </div>
-                <div class="grid md:grid-cols-3 gap-6">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow animate-on-scroll">
                         <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
                             <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -573,7 +634,7 @@
                             </svg>
                         </div>
                         <p class="font-bold text-lg mb-2 text-slate-900" data-i18n="services.card1.title"></p>
-                        <p class="text-sm text-slate-600 leading-relaxed" data-i18n="services.card1.desc"></p>
+                        <ul class="text-sm text-slate-600 leading-relaxed space-y-1 list-disc list-inside" data-i18n-list="services.card1.desc"></ul>
                     </div>
                     <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow animate-on-scroll">
                         <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
@@ -594,6 +655,33 @@
                         <p class="font-bold text-lg mb-2 text-slate-900" data-i18n="services.card3.title"></p>
                         <p class="text-sm text-slate-600 leading-relaxed" data-i18n="services.card3.desc"></p>
                     </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow animate-on-scroll">
+                        <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <p class="font-bold text-lg mb-2 text-slate-900" data-i18n="services.card4.title"></p>
+                        <ul class="text-sm text-slate-600 leading-relaxed space-y-1 list-disc list-inside" data-i18n-list="services.card4.desc"></ul>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow animate-on-scroll">
+                        <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </div>
+                        <p class="font-bold text-lg mb-2 text-slate-900" data-i18n="services.card5.title"></p>
+                        <p class="text-sm text-slate-600 leading-relaxed" data-i18n="services.card5.desc"></p>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow animate-on-scroll">
+                        <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <p class="font-bold text-lg mb-2 text-slate-900" data-i18n="services.card6.title"></p>
+                        <ul class="text-sm text-slate-600 leading-relaxed space-y-1 list-disc list-inside" data-i18n-list="services.card6.desc"></ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -603,7 +691,6 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 animate-on-scroll">
                     <h2 class="text-3xl md:text-4xl font-bold mb-3 text-slate-900" data-i18n="gallery.title"></h2>
-                    <p class="text-lg text-slate-600 max-w-2xl mx-auto" data-i18n="gallery.subtitle"></p>
                 </div>
                 <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <img class="rounded-2xl h-56 w-full object-cover gallery-img cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 animate-on-scroll"
@@ -750,7 +837,7 @@
                                 <label class="block mb-2 font-semibold text-slate-700" data-i18n="form.guestsLabel"></label>
                                 <div class="relative">
                                     <button type="button" id="guests-selector" 
-                                        class="w-full rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all text-left flex items-center justify-between bg-white hover:border-teal-400">
+                                        class="w-full rounded-xl border-2 border-slate-300 px-3 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all text-left flex items-center justify-between bg-white hover:border-teal-400">
                                         <div class="flex items-center gap-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -813,9 +900,40 @@
                             </div>
                             <div>
                                 <label for="form-phone" class="block mb-2 font-semibold text-slate-700" data-i18n="form.phoneLabel"></label>
-                                <input type="tel" name="phone" id="form-phone"
-                                    class="w-full rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all"
-                                    placeholder="" data-i18n-placeholder="form.phonePlaceholder" />
+                                <div class="flex gap-2 min-w-0">
+                                    <div class="relative flex-shrink-0">
+                                        <label for="form-phone-code" class="sr-only" data-i18n="form.phoneCodeLabel"></label>
+                                        <select id="form-phone-code" name="phone_code" required
+                                            class="w-24 rounded-xl border-2 border-slate-300 px-3 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all appearance-none bg-white cursor-pointer">
+                                            <option value="+55" data-flag="🇧🇷" selected>🇧🇷 +55</option>
+                                            <option value="+54" data-flag="🇦🇷">🇦🇷 +54</option>
+                                            <option value="+56" data-flag="🇨🇱">🇨🇱 +56</option>
+                                            <option value="+57" data-flag="🇨🇴">🇨🇴 +57</option>
+                                            <option value="+51" data-flag="🇵🇪">🇵🇪 +51</option>
+                                            <option value="+52" data-flag="🇲🇽">🇲🇽 +52</option>
+                                            <option value="+58" data-flag="🇻🇪">🇻🇪 +58</option>
+                                            <option value="+593" data-flag="🇪🇨">🇪🇨 +593</option>
+                                            <option value="+595" data-flag="🇵🇾">🇵🇾 +595</option>
+                                            <option value="+598" data-flag="🇺🇾">🇺🇾 +598</option>
+                                            <option value="+591" data-flag="🇧🇴">🇧🇴 +591</option>
+                                            <option value="+507" data-flag="🇵🇦">🇵🇦 +507</option>
+                                            <option value="+506" data-flag="🇨🇷">🇨🇷 +506</option>
+                                            <option value="+502" data-flag="🇬🇹">🇬🇹 +502</option>
+                                            <option value="+504" data-flag="🇭🇳">🇭🇳 +504</option>
+                                            <option value="+505" data-flag="🇳🇮">🇳🇮 +505</option>
+                                            <option value="+503" data-flag="🇸🇻">🇸🇻 +503</option>
+                                            <option value="+1" data-flag="🇺🇸">🇺🇸 +1</option>
+                                        </select>
+                                        <div class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+                                            <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <input type="tel" name="phone" id="form-phone" required
+                                        class="flex-1 min-w-0 rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all"
+                                        placeholder="" data-i18n-placeholder="form.phoneNumberPlaceholder" />
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -926,29 +1044,91 @@
                 "hero.seeApartments": "Ver apartamentos",
                 "hero.badge": "A 100m da praia de Zimbros",
                 "apartments.title": "Apartamentos equipados",
-                "apartments.subtitle": "Opções confortáveis para famílias e grupos de até 5 pessoas.",
-                "apartments.card1.title": "Apto. Zimbros",
-                "apartments.card1.desc": "Sala e cozinha integradas, 1 dormitório, banheiro, ar-condicionado e área externa.",
+                "apartments.subtitle": "<p>O residencial conta com 4 apartamentos, sendo 2 no andar superior e 2 no andar térreo.</p><p>Por dentro, todas as unidades são iguais em estrutura e comodidades.</p>",
+                "apartments.card1.title": "Apto. Praia de Zimbros",
+                "apartments.card1.desc": [
+                    "Apartamento no primeiro andar",
+                    "1 quarto com 1 cama de casal e 1 cama de solteiro, com ar-condicionado",
+                    "Cozinha equipada, integrada à sala",
+                    "Sala de estar com 1 sofá-cama, 2 sofás de colchão solteiro (adequados para crianças) e ventilador",
+                    "1 banheiro",
+                    "TV Smart para instalar seus aplicativos",
+                    "Wi-Fi de cortesia",
+                    "Churrasqueira individual, além de uma área comum com churrasqueira compartilhada",
+                    "Piscina de uso coletivo",
+                    "1 vaga de estacionamento"
+                ],
                 "apartments.card1.capacity": "Capacidade: até 5 hóspedes.",
-                "apartments.card1.price": "Consulte valores por temporada",
                 "apartments.card2.title": "Apto. Praia Vermelha",
-                "apartments.card2.desc": "Dois quartos, banheiro, cozinha completa e varanda, ideal para famílias.",
+                "apartments.card2.desc": [
+                    "Apartamento térreo",
+                    "1 quarto com 1 cama de casal e 1 cama de solteiro, com ar-condicionado",
+                    "Cozinha equipada, integrada à sala",
+                    "Sala de estar com 1 sofá-cama, 2 sofás de colchão solteiro (adequados para crianças) e ventilador",
+                    "1 banheiro",
+                    "TV Smart para instalar seus aplicativos",
+                    "Wi-Fi de cortesia",
+                    "Churrasqueira individual, além de uma área comum com churrasqueira compartilhada",
+                    "Piscina de uso coletivo",
+                    "1 vaga de estacionamento"
+                ],
                 "apartments.card2.capacity": "Capacidade: até 5 hóspedes.",
-                "apartments.card2.price": "Consulte valores por temporada",
-                "apartments.card3.title": "Apto. Praia Cardoso",
-                "apartments.card3.desc": "Ambiente amplo, bem ventilado, com cozinha equipada e área de convivência.",
+                "apartments.card3.title": "Apto. Praia do Cardoso",
+                "apartments.card3.desc": [
+                    "Apartamento térreo",
+                    "1 quarto com 1 cama de casal e 1 cama de solteiro, com ar-condicionado",
+                    "Cozinha equipada, integrada à sala",
+                    "Sala de estar com 1 sofá-cama, 2 sofás de colchão solteiro (adequados para crianças) e ventilador",
+                    "1 banheiro",
+                    "TV Smart para instalar seus aplicativos",
+                    "Wi-Fi de cortesia",
+                    "Churrasqueira individual, além de uma área comum com churrasqueira compartilhada",
+                    "Piscina de uso coletivo",
+                    "1 vaga de estacionamento"
+                ],
                 "apartments.card3.capacity": "Capacidade: até 5 hóspedes.",
-                "apartments.card3.price": "Consulte valores por temporada",
+                "apartments.card4.title": "Apto. Praia da Lagoa",
+                "apartments.card4.desc": [
+                    "Apartamento no primeiro andar",
+                    "1 quarto com 1 cama de casal e 1 cama de solteiro, com ar-condicionado",
+                    "Cozinha equipada, integrada à sala",
+                    "Sala de estar com 1 sofá-cama, 2 sofás de colchão solteiro (adequados para crianças) e ventilador",
+                    "1 banheiro",
+                    "TV Smart para instalar seus aplicativos",
+                    "Wi-Fi de cortesia",
+                    "Churrasqueira individual, além de uma área comum com churrasqueira compartilhada",
+                    "Piscina de uso coletivo",
+                    "1 vaga de estacionamento"
+                ],
+                "apartments.card4.capacity": "Capacidade: até 5 hóspedes.",
                 "apartments.card.contact": "Consultar",
                 "services.title": "Serviços e comodidades",
                 "services.card1.title": "Conforto",
-                "services.card1.desc": "Apartamentos mobiliados, ar-condicionado, roupa de cama e ambiente familiar.",
+                "services.card1.desc": [
+                    "Apartamentos mobiliados com ar-condicionado.",
+                    "Roupa de cama: 1 jogo por cama selecionada, disponibilizado para toda a estadia.",
+                    "Wifi.",
+                    "Churrasqueiras."
+                ],
                 "services.card2.title": "Piscina comum",
                 "services.card2.desc": "Piscina compartilhada para relaxar depois da praia.",
                 "services.card3.title": "Localização",
                 "services.card3.desc": "A apenas 100m da praia de Zimbros, próxima a mercados e restaurantes.",
+                "services.card4.title": "Atividades",
+                "services.card4.desc": [
+                    "Trilhas com cachoeira – Costeira de Zimbros.",
+                    "Passeios de barco pirata.",
+                    "Stand-up paddle e caiaque."
+                ],
+                "services.card5.title": "Pet Friendly",
+                "services.card5.desc": "Aceitamos pets de pequeno porte (até 15 kg). Consulte valores.",
+                "services.card6.title": "Informações Gerais",
+                "services.card6.desc": [
+                    "CHECK-IN: a partir das 14:00 horas às 24:00 horas.",
+                    "CHECK-OUT: até as 10:00 horas.",
+                    "1 vaga de estacionamento por apartamento."
+                ],
                 "gallery.title": "Fotos",
-                "gallery.subtitle": "Em breve, adicionaremos fotos reais de cada apartamento e da piscina.",
                 "location.title": "Localização em Zimbros",
                 "location.desc1": "O Residencial Cantinho da Costeira fica em Zimbros (Bombinhas), a aproximadamente 100m da praia, em uma região tranquila e segura.",
                 "location.desc2": "Fácil acesso de carro e boa estrutura de serviços por perto. Entre em contato para orientações sobre como chegar desde o aeroporto ou rodoviária.",
@@ -962,8 +1142,10 @@
                 "form.namePlaceholder": "Seu nome",
                 "form.emailLabel": "E-mail",
                 "form.emailPlaceholder": "seu@email.com",
-                "form.phoneLabel": "Telefone (opcional)",
+                "form.phoneLabel": "Telefone",
+                "form.phoneCodeLabel": "Código do país",
                 "form.phonePlaceholder": "Seu telefone",
+                "form.phoneNumberPlaceholder": "Número",
                 "form.checkInLabel": "Data de chegada",
                 "form.checkOutLabel": "Data de saída",
                 "form.guestsLabel": "Hóspedes",
@@ -990,29 +1172,91 @@
                 "hero.seeApartments": "Ver departamentos",
                 "hero.badge": "A 100m de la playa de Zimbros",
                 "apartments.title": "Departamentos equipados",
-                "apartments.subtitle": "Opciones cómodas para familias y grupos de hasta 5 personas.",
-                "apartments.card1.title": "Depto. Zimbros",
-                "apartments.card1.desc": "Living y cocina integrados, 1 dormitorio, baño, aire acondicionado y área exterior.",
+                "apartments.subtitle": "<p>El residencial cuenta con 4 apartamentos, siendo 2 en la planta superior y 2 en la planta baja.</p><p>Por dentro, todas las unidades son iguales en estructura y comodidades.</p>",
+                "apartments.card1.title": "Depto. Praia de Zimbros",
+                "apartments.card1.desc": [
+                    "Departamento planta alta",
+                    "1 dormitorio con cama matrimonial y una cama individual, con aire acondicionado",
+                    "Cocina equipada, integrada a sala",
+                    "Sala de estar/ comedor con sofá cama, 2 sofás tipo colchón individuales (adecuados para niños) y ventilador",
+                    "1 baño",
+                    "TV Smart para instalar tus aplicaciones",
+                    "Wi-Fi de cortesía",
+                    "Parrilla individual, además de un área común con parrilla compartida",
+                    "Piscina de uso colectivo",
+                    "1 plaza de estacionamiento"
+                ],
                 "apartments.card1.capacity": "Capacidad: hasta 5 huéspedes.",
-                "apartments.card1.price": "Consultar tarifas por temporada",
                 "apartments.card2.title": "Depto. Praia Vermelha",
-                "apartments.card2.desc": "Dos habitaciones, baño, cocina completa y balcón, ideal para familias.",
+                "apartments.card2.desc": [
+                    "Departamento planta baja",
+                    "1 dormitorio con cama matrimonial y una cama individual, con aire acondicionado",
+                    "Cocina equipada, integrada a sala",
+                    "Sala de estar/ comedor con sofá cama, 2 sofás tipo colchón individuales (adecuados para niños) y ventilador",
+                    "1 baño",
+                    "TV Smart para instalar tus aplicaciones",
+                    "Wi-Fi de cortesía",
+                    "Parrilla individual, además de un área común con parrilla compartida",
+                    "Piscina de uso colectivo",
+                    "1 plaza de estacionamiento"
+                ],
                 "apartments.card2.capacity": "Capacidad: hasta 5 huéspedes.",
-                "apartments.card2.price": "Consultar tarifas por temporada",
-                "apartments.card3.title": "Depto. Praia Cardoso",
-                "apartments.card3.desc": "Ambiente amplio y luminoso, con cocina equipada y área de estar.",
+                "apartments.card3.title": "Depto. Praia do Cardoso",
+                "apartments.card3.desc": [
+                    "Departamento planta baja",
+                    "1 dormitorio con cama matrimonial y una cama individual, con aire acondicionado",
+                    "Cocina equipada, integrada a sala",
+                    "Sala de estar/ comedor con sofá cama, 2 sofás tipo colchón individuales (adecuados para niños) y ventilador",
+                    "1 baño",
+                    "TV Smart para instalar tus aplicaciones",
+                    "Wi-Fi de cortesía",
+                    "Parrilla individual, además de un área común con parrilla compartida",
+                    "Piscina de uso colectivo",
+                    "1 plaza de estacionamiento"
+                ],
                 "apartments.card3.capacity": "Capacidad: hasta 5 huéspedes.",
-                "apartments.card3.price": "Consultar tarifas por temporada",
+                "apartments.card4.title": "Depto. Praia da Lagoa",
+                "apartments.card4.desc": [
+                    "Departamento planta alta",
+                    "1 dormitorio con cama matrimonial y una cama individual, con aire acondicionado",
+                    "Cocina equipada, integrada a sala",
+                    "Sala de estar/ comedor con sofá cama, 2 sofás tipo colchón individuales (adecuados para niños) y ventilador",
+                    "1 baño",
+                    "TV Smart para instalar tus aplicaciones",
+                    "Wi-Fi de cortesía",
+                    "Parrilla individual, además de un área común con parrilla compartida",
+                    "Piscina de uso colectivo",
+                    "1 plaza de estacionamiento"
+                ],
+                "apartments.card4.capacity": "Capacidad: hasta 5 huéspedes.",
                 "apartments.card.contact": "Consultar",
                 "services.title": "Servicios y comodidades",
                 "services.card1.title": "Confort",
-                "services.card1.desc": "Departamentos amoblados, aire acondicionado, ropa de cama y ambiente familiar.",
+                "services.card1.desc": [
+                    "Departamentos amoblados con aire acondicionado.",
+                    "Ropa de cama: 1 juego por cama seleccionada, disponible para toda la estadía.",
+                    "Wifi.",
+                    "Parrillas."
+                ],
                 "services.card2.title": "Piscina común",
                 "services.card2.desc": "Piscina compartida para relajarse después de la playa.",
                 "services.card3.title": "Ubicación",
                 "services.card3.desc": "A solo 100m de la playa de Zimbros, cerca de mercados y restaurantes.",
+                "services.card4.title": "Actividades",
+                "services.card4.desc": [
+                    "Senderos con cascada – Costera de Zimbros.",
+                    "Paseos en barco pirata.",
+                    "Stand-up paddle y kayak."
+                ],
+                "services.card5.title": "Pet Friendly",
+                "services.card5.desc": "Aceptamos mascotas de pequeño porte (hasta 15 kg). Consultar valores.",
+                "services.card6.title": "Información General",
+                "services.card6.desc": [
+                    "CHECK-IN: a partir de las 14:00 horas hasta las 24:00 horas.",
+                    "CHECK-OUT: hasta las 10:00 horas.",
+                    "1 plaza de estacionamiento por departamento."
+                ],
                 "gallery.title": "Fotos",
-                "gallery.subtitle": "Pronto agregaremos fotos reales de cada departamento y de la piscina.",
                 "location.title": "Ubicación en Zimbros",
                 "location.desc1": "El Residencial Cantinho da Costeira se encuentra en Zimbros (Bombinhas), a aproximadamente 100m de la playa, en una zona tranquila y segura.",
                 "location.desc2": "Fácil acceso en auto y con buena infraestructura de servicios cerca. Escribinos para más detalles sobre cómo llegar desde el aeropuerto o la terminal.",
@@ -1026,8 +1270,10 @@
                 "form.namePlaceholder": "Tu nombre",
                 "form.emailLabel": "Email",
                 "form.emailPlaceholder": "tu@email.com",
-                "form.phoneLabel": "Teléfono (opcional)",
+                "form.phoneLabel": "Teléfono",
+                "form.phoneCodeLabel": "Código del país",
                 "form.phonePlaceholder": "Tu teléfono",
+                "form.phoneNumberPlaceholder": "Número",
                 "form.checkInLabel": "Fecha de llegada",
                 "form.checkOutLabel": "Fecha de salida",
                 "form.guestsLabel": "Huéspedes",
@@ -1073,6 +1319,20 @@
                 Utils.getElements("[data-i18n]").forEach(el => {
                     const key = el.dataset.i18n;
                     if (dict[key]) el.textContent = dict[key];
+                });
+
+                // Actualizar textos con HTML
+                Utils.getElements("[data-i18n-html]").forEach(el => {
+                    const key = el.dataset.i18nHtml;
+                    if (dict[key]) el.innerHTML = dict[key];
+                });
+
+                // Actualizar listas
+                Utils.getElements("[data-i18n-list]").forEach(el => {
+                    const key = el.dataset.i18nList;
+                    if (dict[key] && Array.isArray(dict[key])) {
+                        el.innerHTML = dict[key].map(item => `<li>${item}</li>`).join('');
+                    }
                 });
 
                 // Actualizar placeholders
