@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Residencial Cantinho da Costeira - Zimbros, Bombinhas</title>
     <meta name="description"
-        content="Residencial em Zimbros (Bombinhas), a 100m da praia. Apartamentos equipados para até 5 pessoas, com piscina comum, ar-condicionado, Wi-Fi e churrasqueiras. Reserve sua estadia!">
+        content="Aluguel temporada em Zimbros, Bombinhas - SC. Residencial a 100m da praia com apartamentos para até 5 pessoas. Piscina, ar-condicionado, Wi-Fi, churrasqueiras e pet friendly. Reserve sua estadia!">
     <meta name="keywords" content="residencial, bombinhas, zimbros, apartamento, aluguel, praia, hospedagem, sc, santa catarina, aluguel temporada, piscina, pet friendly">
     <meta name="author" content="Residencial Cantinho da Costeira">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -47,6 +47,10 @@
     <link rel="icon" type="image/png" sizes="32x32" href="resources/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="64x64" href="resources/img/favicon-64x64.png">
     <link rel="icon" type="image/png" sizes="256x256" href="resources/img/favicon-256x256.png">
+
+    <!-- Preload recursos críticos -->
+    <link rel="preload" as="image" href="resources/img/praia-2.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="resources/img/logo-main-blue.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="application/ld+json">
@@ -160,6 +164,46 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qual a capacidade dos apartamentos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Todos os apartamentos têm capacidade para até 5 hóspedes, com 1 quarto contendo 1 cama de casal e 1 cama de solteiro."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "O residencial aceita animais de estimação?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim, o residencial é pet friendly e aceita animais de pequeno porte (até 15 kg). Consulte valores adicionais."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual o horário de check-in e check-out?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Check-in a partir das 14:00 horas até as 24:00 horas. Check-out até as 10:00 horas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Há estacionamento disponível?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim, há 1 vaga de estacionamento por apartamento."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Residencial Cantinho da Costeira",
       "url": "https://cantinhodacosteira.com",
@@ -180,6 +224,13 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            html {
+                scroll-padding-top: 64px;
+            }
         }
 
         body {
@@ -333,6 +384,24 @@
             outline-offset: 2px;
         }
 
+        /* Skip to content link */
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-primary);
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            border-radius: 0 0 4px 0;
+            font-weight: 600;
+        }
+
+        .skip-to-content:focus {
+            top: 0;
+        }
+
         /* Carrusel de apartamentos */
         .apartment-carousel {
             position: relative;
@@ -377,6 +446,70 @@
             height: 8px;
         }
 
+        /* Indicador de carga del carrusel */
+        .carousel-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-loading.hidden {
+            display: none;
+        }
+
+        .carousel-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Botón de pausa/reanudar auto-play */
+        .carousel-play-pause {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease, background 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .apartment-carousel:hover .carousel-play-pause {
+            opacity: 1;
+        }
+
+        .carousel-play-pause:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+        }
+
+        .carousel-play-pause svg {
+            width: 18px;
+            height: 18px;
+            fill: #0d9488;
+        }
+
         /* Estilos para selector de código de país */
         #form-phone-code {
             padding-right: 1.75rem;
@@ -393,6 +526,9 @@
 </head>
 
 <body class="bg-gradient-to-br from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
+    <!-- Skip to content link -->
+    <a href="#apartments" class="skip-to-content" data-i18n="accessibility.skipToContent">Saltar al contenido</a>
+    
     <!-- Comentar o eliminar estas líneas para desactivar el modo mantenimiento -->
     <!--
     <script>
@@ -518,7 +654,10 @@
                     <div class="relative animate-on-scroll">
                         <div class="relative h-80 md:h-96 rounded-3xl overflow-hidden shadow-2xl bg-slate-200 group">
                             <img src="resources/img/praia-2.jpg"
-                                alt="Residencial próximo à praia" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                alt="Residencial próximo à praia" 
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                loading="eager"
+                                fetchpriority="high">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                             <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-lg">
                                 <p class="text-sm font-semibold text-slate-800" data-i18n="hero.badge"></p>
@@ -543,8 +682,18 @@
                         <div class="relative h-56 bg-slate-200 overflow-hidden group">
                             <!-- Carrusel Verde -->
                             <div class="apartment-carousel relative w-full h-full" data-apartment="verde">
+                                <!-- Indicador de carga -->
+                                <div class="carousel-loading">
+                                    <div class="carousel-spinner"></div>
+                                </div>
+                                <!-- Botón pausar/reanudar -->
+                                <button class="carousel-play-pause" aria-label="Pausar carrusel" title="Pausar carrusel">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                                    </svg>
+                                </button>
                                 <div class="carousel-container relative w-full h-full">
-                                    <img src="resources/img/aptos/verde/aptoVerde1.jpeg" alt="Apto Zimbros - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/verde/aptoVerde1.jpeg" alt="Apto Zimbros - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="eager">
                                     <img src="resources/img/aptos/verde/aptoVerde2.jpeg" alt="Apto Zimbros - Foto 2" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/verde/aptoVerde3.jpeg" alt="Apto Zimbros - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/verde/aptoVerde4.jpeg" alt="Apto Zimbros - Foto 4" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
@@ -592,8 +741,18 @@
                         <div class="relative h-56 bg-slate-200 overflow-hidden group">
                             <!-- Carrusel Rojo -->
                             <div class="apartment-carousel relative w-full h-full" data-apartment="rojo">
+                                <!-- Indicador de carga -->
+                                <div class="carousel-loading">
+                                    <div class="carousel-spinner"></div>
+                                </div>
+                                <!-- Botón pausar/reanudar -->
+                                <button class="carousel-play-pause" aria-label="Pausar carrusel" title="Pausar carrusel">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                                    </svg>
+                                </button>
                                 <div class="carousel-container relative w-full h-full">
-                                    <img src="resources/img/aptos/rojo/aptoRojo1.jpeg" alt="Apto Praia Vermelha - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/rojo/aptoRojo1.jpeg" alt="Apto Praia Vermelha - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="eager">
                                     <img src="resources/img/aptos/rojo/aptoRojo2.jpeg" alt="Apto Praia Vermelha - Foto 2" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/rojo/aptoRojo3.jpeg" alt="Apto Praia Vermelha - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/banio.jpeg" alt="Apto Praia Vermelha - Baño" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
@@ -637,8 +796,18 @@
                         <div class="relative h-56 bg-slate-200 overflow-hidden group">
                             <!-- Carrusel Amarillo -->
                             <div class="apartment-carousel relative w-full h-full" data-apartment="amarillo">
+                                <!-- Indicador de carga -->
+                                <div class="carousel-loading">
+                                    <div class="carousel-spinner"></div>
+                                </div>
+                                <!-- Botón pausar/reanudar -->
+                                <button class="carousel-play-pause" aria-label="Pausar carrusel" title="Pausar carrusel">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                                    </svg>
+                                </button>
                                 <div class="carousel-container relative w-full h-full">
-                                    <img src="resources/img/aptos/amarillo/aptoAmarillo1.jpeg" alt="Apto Praia Cardoso - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/amarillo/aptoAmarillo1.jpeg" alt="Apto Praia Cardoso - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="eager">
                                     <img src="resources/img/aptos/amarillo/aptoAmarillo2.jpeg" alt="Apto Praia Cardoso - Foto 2" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/amarillo/aptoAmarillo3.jpeg" alt="Apto Praia Cardoso - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/amarillo/aptoAmarillo4.jpeg" alt="Apto Praia Cardoso - Foto 4" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
@@ -686,8 +855,18 @@
                         <div class="relative h-56 bg-slate-200 overflow-hidden group">
                             <!-- Carrusel Marron -->
                             <div class="apartment-carousel relative w-full h-full" data-apartment="marron">
+                                <!-- Indicador de carga -->
+                                <div class="carousel-loading">
+                                    <div class="carousel-spinner"></div>
+                                </div>
+                                <!-- Botón pausar/reanudar -->
+                                <button class="carousel-play-pause" aria-label="Pausar carrusel" title="Pausar carrusel">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                                    </svg>
+                                </button>
                                 <div class="carousel-container relative w-full h-full">
-                                    <img src="resources/img/aptos/marron/aptoMarron1.jpeg" alt="Apto Praia da Lagoa - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+                                    <img src="resources/img/aptos/marron/aptoMarron1.jpeg" alt="Apto Praia da Lagoa - Foto 1" class="carousel-slide active w-full h-full object-cover transition-opacity duration-500" loading="eager">
                                     <img src="resources/img/aptos/marron/aptoMarron2.jpeg" alt="Apto Praia da Lagoa - Foto 2" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/marron/aptoMarron3.jpeg" alt="Apto Praia da Lagoa - Foto 3" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
                                     <img src="resources/img/aptos/marron/aptoMarron4.jpeg" alt="Apto Praia da Lagoa - Foto 4" class="carousel-slide w-full h-full object-cover transition-opacity duration-500" loading="lazy">
@@ -931,6 +1110,7 @@
                                 <input type="email" name="email" id="form-email" required
                                     class="w-full rounded-xl border-2 border-slate-300 px-4 py-3 text-sm focus:border-teal-600 focus:ring-2 focus:ring-teal-200 outline-none transition-all"
                                     placeholder="" data-i18n-placeholder="form.emailPlaceholder" />
+                                <p class="text-red-600 text-xs mt-1 hidden" id="form-email-error"></p>
                             </div>
                         </div>
                         <div class="grid md:grid-cols-2 gap-4">
@@ -1158,6 +1338,7 @@
                 "hero.whatsappBtn": "Falar pelo WhatsApp",
                 "hero.seeApartments": "Ver apartamentos",
                 "hero.badge": "A 100m da praia de Zimbros",
+                "accessibility.skipToContent": "Pular para o conteúdo",
                 "apartments.title": "Apartamentos equipados",
                 "apartments.subtitle": "<p>O residencial conta com 4 apartamentos, sendo 2 no andar superior e 2 no andar térreo.</p><p>Por dentro, todas as unidades são iguais em estrutura e comodidades.</p>",
                 "apartments.card1.title": "Apto. Praia de Zimbros",
@@ -1271,7 +1452,8 @@
                 "form.note": "* Formulário demonstrativo. Podemos conectá-lo a um serviço de e-mail ou sistema de reservas depois.",
                 "form.submitDemo": "Enviar",
                 "form.error.pastDate": "A data não pode ser no passado",
-                "form.error.checkoutBeforeCheckin": "A data de saída deve ser posterior à data de chegada"
+                "form.error.checkoutBeforeCheckin": "A data de saída deve ser posterior à data de chegada",
+                "form.error.invalidEmail": "Por favor, insira um email válido"
             },
             es: {
                 "nav.menu": "Menú",
@@ -1286,6 +1468,7 @@
                 "hero.whatsappBtn": "Escribir por WhatsApp",
                 "hero.seeApartments": "Ver departamentos",
                 "hero.badge": "A 100m de la playa de Zimbros",
+                "accessibility.skipToContent": "Saltar al contenido",
                 "apartments.title": "Departamentos equipados",
                 "apartments.subtitle": "<p>El residencial cuenta con 4 apartamentos, siendo 2 en la planta superior y 2 en la planta baja.</p><p>Por dentro, todas las unidades son iguales en estructura y comodidades.</p>",
                 "apartments.card1.title": "Depto. Praia de Zimbros",
@@ -1399,7 +1582,8 @@
                 "form.note": "* Formulario de demostración. Después podemos conectarlo a un servicio de email o sistema de reservas.",
                 "form.submitDemo": "Enviar",
                 "form.error.pastDate": "La fecha no puede ser en el pasado",
-                "form.error.checkoutBeforeCheckin": "La fecha de salida debe ser posterior a la fecha de llegada"
+                "form.error.checkoutBeforeCheckin": "La fecha de salida debe ser posterior a la fecha de llegada",
+                "form.error.invalidEmail": "Por favor, ingrese un email válido"
             }
         };
 
@@ -1513,6 +1697,7 @@
             init() {
                 const checkIn = Utils.getElement("check-in");
                 const checkOut = Utils.getElement("check-out");
+                const email = Utils.getElement("form-email");
                 const form = Utils.getElements('form[action*="formspree"]')[0];
 
                 if (checkIn) {
@@ -1524,6 +1709,17 @@
                     checkOut.addEventListener('change', () => this.validate());
                     checkOut.addEventListener('input', () => this.validate());
                 }
+
+                if (email) {
+                    email.addEventListener('blur', () => this.validateEmail());
+                    email.addEventListener('input', () => {
+                        const errorEl = Utils.getElement("form-email-error");
+                        if (errorEl && !errorEl.classList.contains("hidden")) {
+                            this.validateEmail();
+                        }
+                    });
+                }
+
 
                 if (form) {
                     form.addEventListener('submit', (e) => {
@@ -1592,8 +1788,34 @@
                     }
                 }
 
+                // Validar email
+                isValid = this.validateEmail() && isValid;
+
                 return isValid;
             },
+
+            validateEmail() {
+                const email = Utils.getElement("form-email");
+                const emailError = Utils.getElement("form-email-error");
+                const lang = Utils.getCurrentLang();
+                const dict = translations[lang];
+                
+                if (!email || !emailError) return true;
+
+                const emailValue = email.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (emailValue && !emailRegex.test(emailValue)) {
+                    this.showError(email, emailError, dict["form.error.invalidEmail"]);
+                    return false;
+                } else {
+                    email.classList.remove("border-red-500");
+                    emailError.classList.add("hidden");
+                    emailError.textContent = "";
+                    return true;
+                }
+            },
+
 
             showError(input, errorEl, message) {
                 if (input) input.classList.add("border-red-500");
@@ -1774,7 +1996,10 @@
                 const prevBtn = carousel.querySelector('.carousel-prev');
                 const nextBtn = carousel.querySelector('.carousel-next');
                 const dots = carousel.querySelectorAll('.carousel-dot');
+                const loadingIndicator = carousel.querySelector('.carousel-loading');
+                const playPauseBtn = carousel.querySelector('.carousel-play-pause');
                 let currentIndex = 0;
+                let isPlaying = true;
 
                 const showSlide = (index) => {
                     slides.forEach((slide, i) => {
@@ -1843,17 +2068,62 @@
                     });
                 });
 
+                // Ocultar indicador de carga cuando la primera imagen se carga
+                const firstSlide = slides[0];
+                if (firstSlide && loadingIndicator) {
+                    if (firstSlide.complete) {
+                        loadingIndicator.classList.add('hidden');
+                    } else {
+                        firstSlide.addEventListener('load', () => {
+                            loadingIndicator.classList.add('hidden');
+                        });
+                        firstSlide.addEventListener('error', () => {
+                            loadingIndicator.classList.add('hidden');
+                        });
+                    }
+                }
+
                 // Auto-play opcional (pausa al hover)
                 let autoPlayInterval;
                 const startAutoPlay = () => {
+                    if (!isPlaying) return;
+                    stopAutoPlay(); // Limpiar cualquier intervalo existente
                     autoPlayInterval = setInterval(nextSlide, 4000);
                 };
 
                 const stopAutoPlay = () => {
                     if (autoPlayInterval) {
                         clearInterval(autoPlayInterval);
+                        autoPlayInterval = null;
                     }
                 };
+
+                const togglePlayPause = () => {
+                    isPlaying = !isPlaying;
+                    if (isPlaying) {
+                        startAutoPlay();
+                        if (playPauseBtn) {
+                            playPauseBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
+                            playPauseBtn.setAttribute('aria-label', 'Pausar carrusel');
+                            playPauseBtn.setAttribute('title', 'Pausar carrusel');
+                        }
+                    } else {
+                        stopAutoPlay();
+                        if (playPauseBtn) {
+                            playPauseBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+                            playPauseBtn.setAttribute('aria-label', 'Reanudar carrusel');
+                            playPauseBtn.setAttribute('title', 'Reanudar carrusel');
+                        }
+                    }
+                };
+
+                // Botón de pausar/reanudar
+                if (playPauseBtn) {
+                    playPauseBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        togglePlayPause();
+                    });
+                }
 
                 // Iniciar auto-play
                 startAutoPlay();
@@ -1861,8 +2131,16 @@
                 // Pausar al hover
                 const card = carousel.closest('.card-hover');
                 if (card) {
-                    card.addEventListener('mouseenter', stopAutoPlay);
-                    card.addEventListener('mouseleave', startAutoPlay);
+                    card.addEventListener('mouseenter', () => {
+                        if (isPlaying) {
+                            stopAutoPlay();
+                        }
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        if (isPlaying) {
+                            startAutoPlay();
+                        }
+                    });
                 }
             }
         };
